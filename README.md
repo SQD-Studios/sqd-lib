@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    implementation("net.chamosmp.sqdlib:sqd-lib:1.1.0") // Replace 1.1.0 with the latest version
+    implementation("net.chamosmp.sqdlib:sqd-lib:1.1.3") // Replace 1.1.3 with the latest version
 }
 ```
 
