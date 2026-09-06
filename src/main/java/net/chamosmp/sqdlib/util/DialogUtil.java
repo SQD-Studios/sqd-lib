@@ -29,7 +29,11 @@ public class DialogUtil implements Listener {
 
     private final Map<UUID, Map<String, Consumer<String>>> pending = new ConcurrentHashMap<>();
 
+    private final Plugin plugin;
+
     public DialogUtil(Plugin plugin) {
+        this.plugin = plugin;
+
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
@@ -43,6 +47,7 @@ public class DialogUtil implements Listener {
      * @param content  The label shown next to the text field
      * @param callback Called with the player's input, or null on discard
      */
+    @SuppressWarnings("all")
     public void getInput(Component title, Player player, String key, Component content, String defaultValue, Consumer<String> callback) {
         if (key == null || key.isBlank()) return;
 
@@ -67,7 +72,7 @@ public class DialogUtil implements Listener {
                                         ColorUtil.parse("<green>Confirm"),
                                         ColorUtil.parse("Click to confirm your input."),
                                         100,
-                                        DialogAction.customClick(Key.key("chamoitemskins:" + safeKey + "/confirm"), null)
+                                        DialogAction.customClick(Key.key(plugin.getPluginMeta().getName().toLowerCase() + ":" + safeKey + "/confirm"), null)
                                 ),
                                 ActionButton.create(
                                         ColorUtil.parse("<red>Discard"),
@@ -129,7 +134,7 @@ public class DialogUtil implements Listener {
         Key id = event.getIdentifier();
         String path = id.value();
 
-        if (!id.namespace().equals("chamoitemskins")) return;
+        if (!id.namespace().equals(plugin.getPluginMeta().getName().toLowerCase())) return;
 
         boolean isConfirm = path.endsWith("/confirm");
 
