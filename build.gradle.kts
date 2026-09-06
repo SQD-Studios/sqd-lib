@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "net.chamosmp.sqdlib"
-version = "1.1.0"
+version = "1.1.1"
 
 repositories {
     maven {
@@ -17,8 +17,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:26.2.build.+")
-    compileOnly("me.clip:placeholderapi:2.12.3")
+    api("io.papermc.paper:paper-api:26.2.build.+")
+    api("me.clip:placeholderapi:2.12.3")
 }
 
 publishing {
