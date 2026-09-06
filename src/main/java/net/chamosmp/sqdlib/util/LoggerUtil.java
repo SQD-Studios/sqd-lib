@@ -7,7 +7,7 @@ public class LoggerUtil {
     private final String prefix;
     private static LoggerUtil instance;
 
-    private LoggerUtil(String prefix) {
+    public LoggerUtil(String prefix) {
         this.prefix = prefix;
         instance = this;
     }
