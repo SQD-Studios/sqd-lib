@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Utility for loading and adapting configuration files.
@@ -41,8 +42,13 @@ public final class ConfigUtil {
                 boolean changed = false;
                 for (String key : defaultConfig.getKeys(true)) {
                     if (!config.contains(key)) {
-                        boolean shouldSkipKey = missedKeys.contains(key);
-                        if (!shouldSkipKey) {
+                        AtomicBoolean shouldSkipKey = new AtomicBoolean(true);
+                        missedKeys.forEach(missedKey -> {
+                            if (key.startsWith(missedKey)) {
+                                shouldSkipKey.set(false);
+                            }
+                        });
+                        if (shouldSkipKey.get()) {
                             config.set(key, defaultConfig.get(key));
                             changed = true;
                         }
