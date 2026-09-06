@@ -4,7 +4,6 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -62,39 +61,6 @@ public final class ColorUtil {
         }
 
         return resolved;
-    }
-
-    public static @NotNull String emojiPlaceholder(@NotNull String message, @NotNull String emojiCharacter, boolean playerHeads, boolean items) {
-        if (message.contains(emojiCharacter)) {
-            for (int i = message.indexOf(emojiCharacter); message.indexOf(emojiCharacter, i) != -1; i++) {
-                int second = message.indexOf(emojiCharacter, i + 1);
-                if (i == -1 || second == -1) return message;
-
-                String key = message.substring(i + 1, second);
-                message = message.replace(emojiCharacter + key + emojiCharacter, keyEmojiPlaceholder(key, emojiCharacter, playerHeads, items));
-            }
-            return message;
-        }
-
-        return message;
-    }
-
-    private static @NotNull String keyEmojiPlaceholder(@NotNull String key, @NotNull String emojiChar, boolean playerHeads, boolean items) {
-        String result = emojiChar + key + emojiChar;
-        Material material = Material.getMaterial(key.toUpperCase());
-        if (material != null && items) {
-            if (material.isBlock()) {
-                result = "<white><sprite:blocks:block/" + key + "></white>";
-            } else if (material.isItem()) {
-                result = "<white><sprite:items:item/" + key + "></white>";
-            }
-        } else {
-            Player player = Bukkit.getPlayerExact(key);
-            if (player != null && playerHeads) {
-                result = "<white><head:" + player.getUniqueId() + "></white>";
-            }
-        }
-        return result;
     }
 
     public static @NotNull String deParse(@NotNull Component message) {
