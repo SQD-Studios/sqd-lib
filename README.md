@@ -2,6 +2,11 @@
 
 A library (Specifically for paper plugins) so I don't have to copy and paste the same things again and again
 
+## It's lightweight
+
+What did you think, it's like only 10 classes. The finished build output is as small as 21,1 Kilobytes so it's not
+really going to affect your jar output
+
 ## Using sqd-lib
 
 You aren't supposed to use this as a separate plugin. You only need to shadow it.
@@ -31,7 +36,7 @@ plugins {
 tasks {
     shadowJar { // The shadowJar configuration
         configurations = project.configurations.runtimeClasspath.map { setOf(it) }
-        
+
         relocate("net.chamosmp.sqdlib", "(your plugin group).libs")
     }
 }
