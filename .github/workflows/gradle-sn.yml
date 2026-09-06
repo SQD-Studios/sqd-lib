@@ -27,7 +27,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build
-        run: ./gradlew shadowJar
+        run: ./gradlew build
 
       - name: Publish to maven.chamosmp.net
         run: ./gradlew publishMavenPublicationToChamoSMP-SnapshotsRepository
