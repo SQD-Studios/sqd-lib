@@ -1,6 +1,5 @@
 package net.chamosmp.sqdlib.util;
 
-
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;

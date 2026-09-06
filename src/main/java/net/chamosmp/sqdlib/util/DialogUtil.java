@@ -127,6 +127,7 @@ public class DialogUtil implements Listener {
 
     /**
      * Code logic for the {@link #getInput(Component, Player, String, Component, String, Consumer)}, when the value is confirmed
+     *
      * @param event The event
      */
     @EventHandler
