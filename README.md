@@ -1,5 +1,7 @@
 # sqd-lib
 
+[![Build](https://img.shields.io/github/actions/workflow/status/SQD-Studios/sqd-lib/gradle.yml?style=flat-square)](https://github.com/SQD-Studios/sqd-lib/actions)
+
 A library (Specifically for paper plugins) so I don't have to copy and paste the same things again and again
 
 ## It's lightweight
@@ -22,7 +24,7 @@ repositories {
 }
 
 dependencies {
-    // Replace 2.0.0 with the latest version and you can replace paper with velocity
+    // Replace 2.0.0 with the latest version, and you can replace paper with velocity
     implementation("net.chamosmp.sqdlib:sqdlib-paper:2.0.0")
 }
 ```
