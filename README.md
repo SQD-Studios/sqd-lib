@@ -22,7 +22,8 @@ repositories {
 }
 
 dependencies {
-    implementation("net.chamosmp.sqdlib:sqd-lib:1.1.3") // Replace 1.1.3 with the latest version
+    // Replace 2.0.0 with the latest version and you can replace paper with velocity
+    implementation("net.chamosmp.sqdlib:sqdlib-paper:2.0.0")
 }
 ```
 
@@ -30,11 +31,13 @@ dependencies {
 
 ```kotlin
 plugins {
-    id("com.gradleup.shadow") version "9.6.1" // Adding the shadow plugin
+    // Adding the shadow plugin
+    id("com.gradleup.shadow") version "9.6.1"
 }
 
 tasks {
-    shadowJar { // The shadowJar configuration
+    // The shadowJar configuration
+    shadowJar {
         configurations = project.configurations.runtimeClasspath.map { setOf(it) }
 
         relocate("net.chamosmp.sqdlib", "(your plugin group).libs")
