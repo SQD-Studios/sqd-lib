@@ -1,5 +1,6 @@
-package net.chamosmp.sqdlib.util;
+package net.chamosmp.sqdlib.paper.util;
 
+import net.chamosmp.sqdlib.util.LogType;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
@@ -31,9 +32,9 @@ public final class LanguageUtil {
             YamlConfiguration yaml = ConfigUtil.loadOrAdapt(plugin, "lang/" + langCode + ".yml");
             messages.clear();
             flatten("", yaml.getValues(true));
-            LoggerUtil.log(LoggerUtil.LogType.INFO, "Loaded current language: " + langCode + " (" + messages.size() + " messages)");
+            LoggerUtil.log(LogType.INFO, "Loaded current language: " + langCode + " (" + messages.size() + " messages)");
         } catch (Exception e) {
-            LoggerUtil.log(LoggerUtil.LogType.SEVERE, "Failed to load language file: " + langCode + ". Exception: " + e.getMessage());
+            LoggerUtil.log(LogType.SEVERE, "Failed to load language file: " + langCode + ". Exception: " + e.getMessage());
         }
     }
 

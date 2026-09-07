@@ -1,41 +1,50 @@
-package net.chamosmp.sqdlib.util;
+package net.chamomsp.sqdlib.velocity.util;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.plugin.Plugin;
+import com.velocitypowered.api.event.Subscribe;
+import com.velocitypowered.api.event.player.PlayerClientLoadedWorldEvent;
+import com.velocitypowered.api.plugin.PluginContainer;
+import com.velocitypowered.api.proxy.Player;
+import com.velocitypowered.api.proxy.ProxyServer;
+import net.chamosmp.sqdlib.util.LogType;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class UpdateUtil implements Listener {
+public class UpdateUtil {
 
-    private final Plugin plugin;
+    private final ProxyServer server;
     private final String mrId;
     private final String downloadUrl;
 
-    /**
-     * Class constructor
-     *
-     * @param plugin The plugin instance
-     */
-    public UpdateUtil(Plugin plugin, String modrinthId, String downloadUrl) {
-        this.plugin = plugin;
+    private final Object plugin;
+
+    private final String pluginVer;
+    private final String pluginName;
+
+    public UpdateUtil(ProxyServer server, Object pluginInstance, String modrinthId, String downloadUrl) {
+        this.server = server;
+        this.plugin = pluginInstance;
         this.mrId = modrinthId;
         this.downloadUrl = downloadUrl;
 
-        Bukkit.getPluginManager().registerEvents(this, plugin);
+        PluginContainer pluginContainer = server.getPluginManager().ensurePluginContainer(plugin);
+        Optional<String> optionalPluginVersion = pluginContainer.getDescription().getVersion();
+        this.pluginVer = optionalPluginVersion.orElse("failed");
+
+        Optional<String> optionalPluginName = pluginContainer.getDescription().getName();
+        this.pluginName = optionalPluginName.orElse("sqdplugin");
+
+        server.getEventManager().register(pluginInstance, this);
     }
 
-    @EventHandler
-    public void onConnect(PlayerJoinEvent event) throws IOException, InterruptedException {
+    @Subscribe
+    public void onConnect(PlayerClientLoadedWorldEvent event) throws IOException, InterruptedException {
         Player player = event.getPlayer();
         String version = remoteVer();
 
@@ -43,28 +52,27 @@ public class UpdateUtil implements Listener {
             return;
         }
 
-        if (isNewerVersion(plugin.getPluginMeta().getVersion(), version) && player.hasPermission(plugin.getPluginMeta().getName().toLowerCase() + ".update")) {
-            SchedulerUtil.runForEntity(plugin, player, () -> {
-                player.sendRichMessage("<white>Download the plugin update <u><click:open_url:" + downloadUrl + ">here<r>");
-            }, () -> {
-            });
+        if (isNewerVersion(pluginVer, version) && player.hasPermission(pluginName.toLowerCase() + ".update")) {
+            player.sendRichMessage("<white>Download the plugin update <u><click:open_url:" + downloadUrl + ">here<r>");
         }
     }
 
     public void versionCheck() throws Exception {
-        String pluginVer = plugin.getPluginMeta().getVersion();
+        Optional<String> optionalPluginVersion = server.getPluginManager().ensurePluginContainer(plugin).getDescription().getVersion();
+        String pluginVer = optionalPluginVersion.orElse("failed");
+
         String version = remoteVer();
 
-        if (!version.equals("failed")) {
+        if (!"failed".equals(version) && !"failed".equals(pluginVer)) {
             if (isNewerVersion(pluginVer, version)) {
-                LoggerUtil.log(LoggerUtil.LogType.INFO, String.format(
+                LoggerUtil.log(LogType.INFO, String.format(
                         """
                                 New update available. Your version: " + pluginVer + ", latest version: " + version
                                 Download plugin here: %s""", downloadUrl
                 ));
             }
         } else {
-            LoggerUtil.log(LoggerUtil.LogType.WARNING, "Failed to check for updates.");
+            LoggerUtil.log(LogType.WARNING, "Failed to check for updates.");
         }
     }
 
@@ -110,7 +118,7 @@ public class UpdateUtil implements Listener {
                                 ? Integer.parseInt(latestParts[i])
                                 : 0;
             } catch (NumberFormatException e) {
-                LoggerUtil.log(LoggerUtil.LogType.SEVERE, "Had error parsing versions: " + e);
+                LoggerUtil.log(LogType.SEVERE, "Had error parsing versions: " + e);
             }
             if (latestValue > currentValue) {
                 return true;

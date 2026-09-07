@@ -1,4 +1,4 @@
-package net.chamosmp.sqdlib.util;
+package net.chamosmp.sqdlib.paper.util;
 
 import io.papermc.paper.connection.PlayerGameConnection;
 import io.papermc.paper.dialog.Dialog;

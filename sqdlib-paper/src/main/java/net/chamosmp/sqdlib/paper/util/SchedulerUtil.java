@@ -1,4 +1,4 @@
-package net.chamosmp.sqdlib.util;
+package net.chamosmp.sqdlib.paper.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

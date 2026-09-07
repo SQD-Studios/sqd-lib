@@ -1,50 +1,33 @@
-package net.chamosmp.sqdlib.util;
+package net.chamosmp.sqdlib.internal;
 
-import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public final class ColorUtil {
+/**
+ * Please use the "ColorUtil" class of your platform.
+ */
+public class AdventureUtil {
     private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
-    private static final boolean PAPI_PRESENT = Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI");
 
-    public static @NotNull Component parse(@NotNull String message) {
-        if (PAPI_PRESENT) {
-            return MINI_MESSAGE.deserialize(legacyToMiniMessage(PlaceholderAPI.setPlaceholders(null, message)));
-        } else {
-            return MINI_MESSAGE.deserialize(legacyToMiniMessage(message));
-        }
+    protected static @NotNull Component parse(@NotNull String message) {
+        return MINI_MESSAGE.deserialize(legacyToMiniMessage(message));
     }
 
-    public static @NotNull Component parse(@NotNull Player player, @NotNull String message) {
-        if (PAPI_PRESENT) {
-            return MINI_MESSAGE.deserialize(legacyToMiniMessage(PlaceholderAPI.setPlaceholders(player, message)));
-        } else {
-            return MINI_MESSAGE.deserialize(legacyToMiniMessage(message));
-        }
-    }
-
-    public static @NotNull Component parse(Player player, @NotNull String message, @NotNull Map<?, ?> placeholders) {
+    protected static @NotNull Component parse(@NotNull String message, @NotNull Map<?, ?> placeholders) {
         String resolved = message;
         for (var entry : placeholders.entrySet()) {
             resolved = resolved.replace("%" + entry.getKey() + "%", entry.getValue().toString());
         }
 
-        if (PAPI_PRESENT) {
-            resolved = PlaceholderAPI.setPlaceholders(player, resolved);
-        }
-
         return MINI_MESSAGE.deserialize(legacyToMiniMessage(resolved));
     }
 
-    public static @NotNull List<String> placeholder(@NotNull List<String> message, @NotNull Map<?, ?> placeholders) {
+    protected static @NotNull List<String> placeholder(@NotNull List<String> message, @NotNull Map<?, ?> placeholders) {
         List<String> resolved = new ArrayList<>(message);
         for (var entry : placeholders.entrySet()) {
             String key = "%" + entry.getKey() + "%";
@@ -54,7 +37,7 @@ public final class ColorUtil {
         return resolved;
     }
 
-    public static @NotNull String placeholder(@NotNull String message, @NotNull Map<?, ?> placeholders) {
+    protected static @NotNull String placeholder(@NotNull String message, @NotNull Map<?, ?> placeholders) {
         String resolved = message;
         for (var entry : placeholders.entrySet()) {
             resolved = resolved.replace("%" + entry.getKey() + "%", entry.getValue().toString());
@@ -63,7 +46,7 @@ public final class ColorUtil {
         return resolved;
     }
 
-    public static @NotNull String deParse(@NotNull Component message) {
+    protected static @NotNull String deParse(@NotNull Component message) {
         return MINI_MESSAGE.serialize(message);
     }
 
@@ -73,7 +56,7 @@ public final class ColorUtil {
      * @param message The legacy-formatted message
      * @return The message with MiniMessage tags instead of legacy
      */
-    public static String legacyToMiniMessage(String message) {
+    protected static String legacyToMiniMessage(String message) {
         String oneChar = message.replace("§", "&");
         String black = oneChar.replace("&0", "<black>");
         String dark_blue = black.replace("&1", "<dark_blue>");

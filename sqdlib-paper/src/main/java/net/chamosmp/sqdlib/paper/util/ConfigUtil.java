@@ -1,5 +1,6 @@
-package net.chamosmp.sqdlib.util;
+package net.chamosmp.sqdlib.paper.util;
 
+import net.chamosmp.sqdlib.util.LogType;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
@@ -58,11 +59,11 @@ public final class ConfigUtil {
                     try {
                         config.save(file);
                     } catch (IOException e) {
-                        LoggerUtil.log(LoggerUtil.LogType.SEVERE, "Could not save adapted config " + fileName + ": " + e.getMessage());
+                        LoggerUtil.log(LogType.SEVERE, "Could not save adapted config " + fileName + ": " + e.getMessage());
                     }
                 }
             } catch (IOException e) {
-                LoggerUtil.log(LoggerUtil.LogType.SEVERE, "Could not read default config: " + e.getMessage());
+                LoggerUtil.log(LogType.SEVERE, "Could not read default config: " + e.getMessage());
             }
 
         }
@@ -100,11 +101,11 @@ public final class ConfigUtil {
                     try {
                         config.save(file);
                     } catch (IOException e) {
-                        LoggerUtil.log(LoggerUtil.LogType.SEVERE, "Could not save adapted config " + fileName + ": " + e.getMessage());
+                        LoggerUtil.log(LogType.SEVERE, "Could not save adapted config " + fileName + ": " + e.getMessage());
                     }
                 }
             } catch (IOException e) {
-                LoggerUtil.log(LoggerUtil.LogType.SEVERE, "Could not read default config: " + e.getMessage());
+                LoggerUtil.log(LogType.SEVERE, "Could not read default config: " + e.getMessage());
             }
 
         }
