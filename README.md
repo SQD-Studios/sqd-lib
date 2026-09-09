@@ -42,7 +42,7 @@ tasks {
     shadowJar {
         configurations = project.configurations.runtimeClasspath.map { setOf(it) }
 
-        relocate("net.chamosmp.sqdlib", "(your plugin group).libs")
+        relocate("net.chamosmp.sqdlib", "(your plugin group).libs.sqdlib")
     }
 }
 
