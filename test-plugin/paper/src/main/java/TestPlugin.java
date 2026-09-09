@@ -1,3 +1,4 @@
+import net.chamosmp.sqdlib.lang.value.DoubleValue;
 import net.chamosmp.sqdlib.paper.util.*;
 import net.chamosmp.sqdlib.util.LogType;
 import org.bukkit.Bukkit;
@@ -41,5 +42,12 @@ public class TestPlugin extends JavaPlugin implements Listener {
             Bukkit.getServer().isStopping();
             Bukkit.getCurrentTick();
         });
+    }
+
+    public DoubleValue<String, String> getDoubleValue() {
+        String value1 = null;
+        String value2 = null;
+
+        return new DoubleValue<>(value1, value2);
     }
 }

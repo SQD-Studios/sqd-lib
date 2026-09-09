@@ -106,6 +106,8 @@ public class UpdateUtil {
                                 New update available. Your version: " + pluginVer + ", latest version: " + version
                                 Download plugin here: %s""", downloadUrl
                 ));
+            } else {
+                LoggerUtil.log(LogType.INFO, "You are up to date!");
             }
         } else {
             LoggerUtil.log(LogType.WARNING, "Failed to check for updates.");
