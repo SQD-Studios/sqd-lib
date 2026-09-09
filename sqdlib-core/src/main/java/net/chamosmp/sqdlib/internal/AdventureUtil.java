@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Please use the "ColorUtil" class of your platform.
+ * Please use the {@code ColorUtil} class of your platform.
  */
 public class AdventureUtil {
     private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();

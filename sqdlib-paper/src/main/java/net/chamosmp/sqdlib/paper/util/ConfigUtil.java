@@ -13,22 +13,30 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * Utility for loading and adapting configuration files.
+ * Utility class for loading, creating and adapting configs
+ *
+ * @see ConfigUtil#loadDataFile(Plugin, String)
+ * @see ConfigUtil#loadOrAdapt(Plugin, String, List)
+ * @see ConfigUtil#loadOrAdapt(Plugin, String)
  */
 public final class ConfigUtil {
 
+    /**
+     * You cannot construct {@link ConfigUtil}, as all of its methods are static
+     */
     private ConfigUtil() {
     }
 
     /**
-     * Loads a configuration file from the plugin folder, or creates it from defaults.
-     * Merges missing keys from defaults into existing files.
+     * Loads a configuration file, or creates it.
+     * Merges missing keys into the existing file, if it found missing keys.
      *
-     * @param plugin   The plugin instance.
-     * @param fileName The name of the file (e.g., "config.yml").
-     * @return The loaded YamlConfiguration.
+     * @param plugin     The plugin instance
+     * @param fileName   The name of the file (With the {@code .yml} extension included)
+     * @param missedKeys The keys to skip when merging the keys
+     * @return The loaded {@link YamlConfiguration}
      */
-    public static @NotNull YamlConfiguration loadOrAdapt(@NotNull Plugin plugin, @NotNull String fileName, List<String> missedKeys) {
+    public static @NotNull YamlConfiguration loadOrAdapt(@NotNull Plugin plugin, @NotNull String fileName, @NotNull List<String> missedKeys) {
         File file = new File(plugin.getDataFolder(), fileName);
         if (!file.exists()) {
             plugin.saveResource(fileName, false);
@@ -71,12 +79,12 @@ public final class ConfigUtil {
     }
 
     /**
-     * Loads a configuration file from the plugin folder, or creates it from defaults.
-     * Merges missing keys from defaults into existing files.
+     * Loads a configuration file, or creates it.
+     * Merges missing keys into the existing file, if it found missing keys.
      *
-     * @param plugin   The plugin instance.
-     * @param fileName The name of the file (e.g., "config.yml").
-     * @return The loaded YamlConfiguration.
+     * @param plugin   The plugin instance
+     * @param fileName The name of the file (With the {@code .yml} extension included)
+     * @return The loaded {@link YamlConfiguration}
      */
     public static @NotNull YamlConfiguration loadOrAdapt(@NotNull Plugin plugin, @NotNull String fileName) {
         File file = new File(plugin.getDataFolder(), fileName);
@@ -112,6 +120,13 @@ public final class ConfigUtil {
         return config;
     }
 
+    /**
+     * Loads a configuration file, without merging the missing keys
+     *
+     * @param plugin   The plugin instance
+     * @param fileName The name of the file (With the {@code .yml} extension included)
+     * @return The loaded {@link YamlConfiguration}
+     */
     public static @NotNull YamlConfiguration loadDataFile(@NotNull Plugin plugin, @NotNull String fileName) {
         File file = new File(plugin.getDataFolder(), fileName);
         if (!file.exists()) {

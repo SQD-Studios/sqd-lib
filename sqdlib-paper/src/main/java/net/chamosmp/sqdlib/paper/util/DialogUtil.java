@@ -17,6 +17,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
@@ -24,13 +26,28 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
-
+/**
+ * A utility class for making dialogs, and doing actions with them
+ *
+ * @see DialogUtil#getInput(Component, Player, String, Component, String, Consumer)
+ * @see DialogUtil#getYesNo(Component, Player, Consumer)
+ */
 public class DialogUtil implements Listener {
 
     private final Map<UUID, Map<String, Consumer<String>>> pending = new ConcurrentHashMap<>();
 
     private final Plugin plugin;
 
+    /**
+     * A utility class for making dialogs, and doing actions with them
+     * <p>
+     * <p>
+     * Registers the class as a listener
+     *
+     * @param plugin The plugin instance
+     * @see DialogUtil#getInput(Component, Player, String, Component, String, Consumer)
+     * @see DialogUtil#getYesNo(Component, Player, Consumer)
+     */
     public DialogUtil(Plugin plugin) {
         this.plugin = plugin;
 
@@ -48,7 +65,7 @@ public class DialogUtil implements Listener {
      * @param callback Called with the player's input, or null on discard
      */
     @SuppressWarnings("all")
-    public void getInput(Component title, Player player, String key, Component content, String defaultValue, Consumer<String> callback) {
+    public void getInput(@NotNull Component title, @NotNull Player player, @NotNull String key, @NotNull Component content, @Nullable String defaultValue, @NotNull Consumer<String> callback) {
         if (key == null || key.isBlank()) return;
 
         // Sanitize: lowercase, replace invalid chars with underscores
@@ -97,7 +114,7 @@ public class DialogUtil implements Listener {
      * @param player   The player to open the dialog to
      * @param callback Called with the player's input, or null on discard
      */
-    public void getYesNo(Component title, Player player, Consumer<Boolean> callback) {
+    public void getYesNo(@NotNull Component title, @NotNull Player player, @NotNull Consumer<Boolean> callback) {
         Dialog dialog = Dialog.create(builder ->
                 builder.empty()
                         .base(DialogBase.builder(title)

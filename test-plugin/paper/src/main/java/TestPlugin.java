@@ -18,7 +18,6 @@ public class TestPlugin extends JavaPlugin implements Listener {
 
         ConfigUtil.loadOrAdapt(this, "hi.yml");
         ConfigUtil.loadDataFile(this, "config.yml");
-
     }
 
     @EventHandler

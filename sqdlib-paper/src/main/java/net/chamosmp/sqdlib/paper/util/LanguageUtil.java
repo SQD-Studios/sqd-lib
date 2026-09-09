@@ -3,16 +3,35 @@ package net.chamosmp.sqdlib.paper.util;
 import net.chamosmp.sqdlib.util.LogType;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import static net.chamosmp.sqdlib.paper.util.LoggerUtil.log;
+
+/**
+ * A utility class to make language files, and read from them
+ *
+ * @see LanguageUtil#getMessage(String)
+ * @see LanguageUtil#getMessage(String, Map)
+ */
 public final class LanguageUtil {
 
     private final Plugin plugin;
     private final Map<String, String> messages = new HashMap<>();
 
+    /**
+     * A utility class to make language files, and read from them
+     * <p>
+     * <p>
+     * Create and load a language file
+     *
+     * @param plugin The plugin instance
+     * @see LanguageUtil#getMessage(String)
+     * @see LanguageUtil#getMessage(String, Map)
+     */
     public LanguageUtil(Plugin plugin) {
         this.plugin = plugin;
         File langDir = new File(plugin.getDataFolder(), "lang");
@@ -32,9 +51,9 @@ public final class LanguageUtil {
             YamlConfiguration yaml = ConfigUtil.loadOrAdapt(plugin, "lang/" + langCode + ".yml");
             messages.clear();
             flatten("", yaml.getValues(true));
-            LoggerUtil.log(LogType.INFO, "Loaded current language: " + langCode + " (" + messages.size() + " messages)");
+            log(LogType.INFO, "Loaded current language: " + langCode + " (" + messages.size() + " messages)");
         } catch (Exception e) {
-            LoggerUtil.log(LogType.SEVERE, "Failed to load language file: " + langCode + ". Exception: " + e.getMessage());
+            log(LogType.SEVERE, "Failed to load language file: " + langCode + ". Exception: " + e.getMessage());
         }
     }
 
@@ -54,17 +73,24 @@ public final class LanguageUtil {
         }
     }
 
-    public String getMessage(String key, Map<?, ?> placeholders) {
-        String template = messages.getOrDefault(key, key);
-        if (placeholders != null) {
-            for (Map.Entry<?, ?> entry : placeholders.entrySet()) {
-                template = template.replace("{" + entry.getKey().toString() + "}", entry.getValue().toString());
-            }
-        }
-        return template;
+    /**
+     * Get a message from the language file
+     *
+     * @param key          The key in the config file
+     * @param placeholders The placeholders
+     * @return The message
+     */
+    public String getMessage(@NotNull String key, @NotNull Map<?, ?> placeholders) {
+        return ColorUtil.placeholder(getMessage(key), placeholders);
     }
 
-    public String getMessage(String key) {
-        return getMessage(key, null);
+    /**
+     * Get a message from the language file
+     *
+     * @param key The key in the config file
+     * @return The message
+     */
+    public String getMessage(@NotNull String key) {
+        return messages.getOrDefault(key, key);
     }
 }

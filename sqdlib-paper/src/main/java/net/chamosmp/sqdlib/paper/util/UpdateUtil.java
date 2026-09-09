@@ -16,16 +16,29 @@ import java.net.http.HttpResponse;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * A utility class for showing your users that the plugin has an update available
+ *
+ * @apiNote Only supports Modrinth
+ * @see UpdateUtil#versionCheck()
+ * @see UpdateUtil#onConnect(PlayerJoinEvent)
+ */
 public class UpdateUtil implements Listener {
 
     private final Plugin plugin;
     private final String mrId;
     private final String downloadUrl;
 
+
     /**
-     * Class constructor
+     * A utility class for showing your users that the plugin has an update available
      *
-     * @param plugin The plugin instance
+     * @param plugin      The plugin instance
+     * @param modrinthId  The Modrinth project id (Or slug)
+     * @param downloadUrl The download url
+     * @apiNote Only supports Modrinth
+     * @see UpdateUtil#versionCheck()
+     * @see UpdateUtil#onConnect(PlayerJoinEvent)
      */
     public UpdateUtil(Plugin plugin, String modrinthId, String downloadUrl) {
         this.plugin = plugin;
@@ -35,6 +48,16 @@ public class UpdateUtil implements Listener {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
+    /**
+     * An {@link EventHandler} listener, that listens to {@link PlayerJoinEvent}, to
+     * send a message to an admin (Found by the permission {@code (plugin name).update})
+     * that an update is available (If an update is found)
+     *
+     * @param event The event
+     * @throws IOException          The exception that may throw when running {@link UpdateUtil#remoteVer()}
+     * @throws InterruptedException The exception that may throw when running {@link UpdateUtil#remoteVer()}
+     * @apiNote You do not need to register this class as a listener
+     */
     @EventHandler
     public void onConnect(PlayerJoinEvent event) throws IOException, InterruptedException {
         Player player = event.getPlayer();
@@ -52,6 +75,15 @@ public class UpdateUtil implements Listener {
         }
     }
 
+    /**
+     * Checks for updates, and if an update is available, it sends a message to the console saying the current version and the latest version.
+     * If it failed retrieving update information, it prints a warning in the console. If they are running the latest version,
+     * it says they're on the latest version
+     * <p>
+     * You should run this if you want to check for updates and then show it to the console
+     *
+     * @throws Exception The exception that may throw when running {@link UpdateUtil#remoteVer()}
+     */
     public void versionCheck() throws Exception {
         String pluginVer = plugin.getPluginMeta().getVersion();
         String version = remoteVer();
@@ -60,15 +92,25 @@ public class UpdateUtil implements Listener {
             if (isNewerVersion(pluginVer, version)) {
                 LoggerUtil.log(LogType.INFO, String.format(
                         """
-                                New update available. Your version: " + pluginVer + ", latest version: " + version
-                                Download plugin here: %s""", downloadUrl
+                                New update available. Your version: %s, latest version: %s
+                                Download plugin here: %s""", pluginVer, version, downloadUrl
                 ));
+            } else {
+                LoggerUtil.log(LogType.INFO, "You are up to date!");
             }
         } else {
             LoggerUtil.log(LogType.WARNING, "Failed to check for updates.");
         }
     }
 
+    /**
+     * Get the latest version from Modrinth
+     *
+     * @return the latest version
+     * @throws IOException          thrown if an I/O exception occurred or the client is closed  (By {@link HttpClient#send(HttpRequest, HttpResponse.BodyHandler)}
+     * @throws InterruptedException thrown if the http request is interrupted (By {@link HttpClient#send(HttpRequest, HttpResponse.BodyHandler)}
+     * @apiNote This makes a sync http request everytime you use it, so be careful how you use it
+     */
     public String remoteVer() throws IOException, InterruptedException {
         String baseUrl = "https://api.modrinth.com/v2";
 
@@ -91,6 +133,13 @@ public class UpdateUtil implements Listener {
 
     }
 
+    /**
+     * Tries to parse, and then return if the version is newer than the current one or not.
+     *
+     * @param current The current version
+     * @param latest  The latest version fetched from modrinth
+     * @return {@code true} if the version is newer, {@code false} if it is on the same or newer version than {@code latest}
+     */
     public static boolean isNewerVersion(String current, String latest) {
         String[] currentParts = current.split("\\.");
         String[] latestParts = latest.split("\\.");

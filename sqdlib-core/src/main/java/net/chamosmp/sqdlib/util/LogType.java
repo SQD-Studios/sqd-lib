@@ -1,5 +1,8 @@
 package net.chamosmp.sqdlib.util;
 
+/**
+ * Enum for showing the log status
+ */
 public enum LogType {
     SEVERE("<dark_red>"),
     WARNING("<yellow>"),
