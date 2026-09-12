@@ -31,4 +31,20 @@ public class DoubleValue<T, E> {
     public E getSecond() {
         return secondValue;
     }
+
+
+    public ValueType contains(Object value) {
+        ValueType contains = null;
+        if (firstValue != null) {
+            contains = ValueType.FIRST;
+        }
+        if (secondValue != null && contains != null) {
+            contains = ValueType.SECOND;
+        }
+        return contains;
+    }
+
+    public enum ValueType {
+        FIRST, SECOND
+    }
 }
