@@ -23,9 +23,9 @@ public class DoubleValueList<T, E> {
             DoubleValue.ValueType i = doubleValue.contains(object);
             if (i != null) {
                 if (i == DoubleValue.ValueType.FIRST) {
-                    return doubleValue.firstValue;
-                } else if (i == DoubleValue.ValueType.SECOND) {
                     return doubleValue.secondValue;
+                } else if (i == DoubleValue.ValueType.SECOND) {
+                    return doubleValue.firstValue;
                 }
             }
         }
