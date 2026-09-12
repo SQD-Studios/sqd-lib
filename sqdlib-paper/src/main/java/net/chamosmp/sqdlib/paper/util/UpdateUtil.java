@@ -13,6 +13,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.concurrent.CompletableFuture;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -54,25 +55,23 @@ public class UpdateUtil implements Listener {
      * that an update is available (If an update is found)
      *
      * @param event The event
-     * @throws IOException          The exception that may throw when running {@link UpdateUtil#remoteVer()}
-     * @throws InterruptedException The exception that may throw when running {@link UpdateUtil#remoteVer()}
      * @apiNote You do not need to register this class as a listener
      */
     @EventHandler
-    public void onConnect(PlayerJoinEvent event) throws IOException, InterruptedException {
+    public void onConnect(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        String version = remoteVer();
+        remoteVer().whenComplete((version, _) -> {
+            if (version == null || version.equals("failed")) {
+                return;
+            }
 
-        if (version == null || version.equals("failed")) {
-            return;
-        }
-
-        if (isNewerVersion(plugin.getPluginMeta().getVersion(), version) && player.hasPermission(plugin.getPluginMeta().getName().toLowerCase() + ".update")) {
-            SchedulerUtil.runForEntity(plugin, player, () -> {
-                player.sendRichMessage("<white>Download the plugin update <u><click:open_url:" + downloadUrl + ">here<r>");
-            }, () -> {
-            });
-        }
+            if (isNewerVersion(plugin.getPluginMeta().getVersion(), version) && player.hasPermission(plugin.getPluginMeta().getName().toLowerCase() + ".update")) {
+                SchedulerUtil.runForEntity(plugin, player, () -> {
+                    player.sendRichMessage("<white>Download the plugin update <u><click:open_url:" + downloadUrl + ">here<r>");
+                }, () -> {
+                });
+            }
+        });
     }
 
     /**
@@ -82,55 +81,59 @@ public class UpdateUtil implements Listener {
      * <p>
      * You should run this if you want to check for updates and then show it to the console
      *
-     * @throws Exception The exception that may throw when running {@link UpdateUtil#remoteVer()}
      */
-    public void versionCheck() throws Exception {
+    public void versionCheck() {
         String pluginVer = plugin.getPluginMeta().getVersion();
-        String version = remoteVer();
-
-        if (!version.equals("failed")) {
-            if (isNewerVersion(pluginVer, version)) {
-                LoggerUtil.log(LogType.INFO, String.format(
-                        """
-                                New update available. Your version: %s, latest version: %s
-                                Download plugin here: %s""", pluginVer, version, downloadUrl
-                ));
+        remoteVer().whenComplete((version, _) -> {
+            if (!version.equals("failed")) {
+                if (isNewerVersion(pluginVer, version)) {
+                    LoggerUtil.log(LogType.INFO, String.format(
+                            """
+                                    New update available. Your version: %s, latest version: %s
+                                    Download plugin here: %s""", pluginVer, version, downloadUrl
+                    ));
+                } else {
+                    LoggerUtil.log(LogType.INFO, "You are up to date!");
+                }
             } else {
-                LoggerUtil.log(LogType.INFO, "You are up to date!");
+                LoggerUtil.log(LogType.WARNING, "Failed to check for updates.");
             }
-        } else {
-            LoggerUtil.log(LogType.WARNING, "Failed to check for updates.");
-        }
+        });
     }
 
     /**
      * Get the latest version from Modrinth
      *
      * @return the latest version
-     * @throws IOException          thrown if an I/O exception occurred or the client is closed  (By {@link HttpClient#send(HttpRequest, HttpResponse.BodyHandler)}
-     * @throws InterruptedException thrown if the http request is interrupted (By {@link HttpClient#send(HttpRequest, HttpResponse.BodyHandler)}
      * @apiNote This makes a sync http request everytime you use it, so be careful how you use it
      */
-    public String remoteVer() throws IOException, InterruptedException {
-        String baseUrl = "https://api.modrinth.com/v2";
+    public CompletableFuture<String> remoteVer() {
+        return CompletableFuture.supplyAsync(() -> {
+            try (HttpClient client = HttpClient.newHttpClient()) {
+                String baseUrl = "https://api.modrinth.com/v2";
 
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(baseUrl + "/project/" + mrId + "/version"))
-                .build();
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create(baseUrl + "/project/" + mrId + "/version"))
+                        .build();
 
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        String responseBody = response.body();
+                HttpResponse<String> response;
 
-        Pattern pattern = Pattern.compile("\"version_number\"\\s*:\\s*\"([^\"]+)\"");
-        Matcher matcher = pattern.matcher(responseBody);
+                response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        if (!matcher.find()) {
-            return "failed";
-        }
+                String responseBody = response.body();
 
-        return matcher.group(1);
+                Pattern pattern = Pattern.compile("\"version_number\"\\s*:\\s*\"([^\"]+)\"");
+                Matcher matcher = pattern.matcher(responseBody);
 
+                if (!matcher.find()) {
+                    return "failed";
+                }
+
+                return matcher.group(1);
+            } catch (IOException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     /**
