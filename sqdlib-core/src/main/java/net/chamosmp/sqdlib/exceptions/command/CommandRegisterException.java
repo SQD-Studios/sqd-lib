@@ -1,4 +1,4 @@
-package net.chamosmp.sqdlib.exceptions;
+package net.chamosmp.sqdlib.exceptions.command;
 
 /**
  * Used to show that the registration of the commands is not successful.

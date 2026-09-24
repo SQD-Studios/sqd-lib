@@ -1,4 +1,4 @@
-package net.chamosmp.sqdlib.exceptions;
+package net.chamosmp.sqdlib.exceptions.plugin;
 
 /**
  * Used to show that multiple plugins are missing, that are required in the function of the plugin
