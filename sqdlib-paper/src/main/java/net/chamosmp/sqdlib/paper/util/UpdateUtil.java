@@ -1,6 +1,6 @@
 package net.chamosmp.sqdlib.paper.util;
 
-import net.chamosmp.sqdlib.util.LogType;
+import net.chamosmp.sqdlib.util.log.LogType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -47,6 +47,47 @@ public class UpdateUtil implements Listener {
         this.downloadUrl = downloadUrl;
 
         Bukkit.getPluginManager().registerEvents(this, plugin);
+    }
+
+    /**
+     * Tries to parse, and then return if the version is newer than the current one or not.
+     *
+     * @param current The current version
+     * @param latest  The latest version fetched from modrinth
+     * @return {@code true} if the version is newer, {@code false} if it is on the same or newer version than {@code latest}
+     */
+    public static boolean isNewerVersion(String current, String latest) {
+        String[] currentParts = current.split("\\.");
+        String[] latestParts = latest.split("\\.");
+
+        int maxLength = Math.max(currentParts.length, latestParts.length);
+
+        for (int i = 0; i < maxLength; i++) {
+            int currentValue = 0;
+            int latestValue = 0;
+            try {
+                currentValue =
+                        i < currentParts.length
+                                ? Integer.parseInt(currentParts[i])
+                                : 0;
+
+                latestValue =
+                        i < latestParts.length
+                                ? Integer.parseInt(latestParts[i])
+                                : 0;
+            } catch (NumberFormatException e) {
+                LoggerUtil.log(LogType.SEVERE, "Had error parsing versions: " + e);
+            }
+            if (latestValue > currentValue) {
+                return true;
+            }
+
+            if (latestValue < currentValue) {
+                return false;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -134,47 +175,6 @@ public class UpdateUtil implements Listener {
                 throw new RuntimeException(e);
             }
         });
-    }
-
-    /**
-     * Tries to parse, and then return if the version is newer than the current one or not.
-     *
-     * @param current The current version
-     * @param latest  The latest version fetched from modrinth
-     * @return {@code true} if the version is newer, {@code false} if it is on the same or newer version than {@code latest}
-     */
-    public static boolean isNewerVersion(String current, String latest) {
-        String[] currentParts = current.split("\\.");
-        String[] latestParts = latest.split("\\.");
-
-        int maxLength = Math.max(currentParts.length, latestParts.length);
-
-        for (int i = 0; i < maxLength; i++) {
-            int currentValue = 0;
-            int latestValue = 0;
-            try {
-                currentValue =
-                        i < currentParts.length
-                                ? Integer.parseInt(currentParts[i])
-                                : 0;
-
-                latestValue =
-                        i < latestParts.length
-                                ? Integer.parseInt(latestParts[i])
-                                : 0;
-            } catch (NumberFormatException e) {
-                LoggerUtil.log(LogType.SEVERE, "Had error parsing versions: " + e);
-            }
-            if (latestValue > currentValue) {
-                return true;
-            }
-
-            if (latestValue < currentValue) {
-                return false;
-            }
-        }
-
-        return false;
     }
 
 }

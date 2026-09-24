@@ -17,8 +17,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
@@ -65,7 +65,7 @@ public class DialogUtil implements Listener {
      * @param callback Called with the player's input, or null on discard
      */
     @SuppressWarnings("all")
-    public void getInput(@NotNull Component title, @NotNull Player player, @NotNull String key, @NotNull Component content, @Nullable String defaultValue, @NotNull Consumer<String> callback) {
+    public void getInput(@NonNull Component title, @NonNull Player player, @NonNull String key, @NonNull Component content, @Nullable String defaultValue, @NonNull Consumer<String> callback) {
         if (key == null || key.isBlank()) return;
 
         // Sanitize: lowercase, replace invalid chars with underscores
@@ -114,7 +114,7 @@ public class DialogUtil implements Listener {
      * @param player   The player to open the dialog to
      * @param callback Called with the player's input, or null on discard
      */
-    public void getYesNo(@NotNull Component title, @NotNull Player player, @NotNull Consumer<Boolean> callback) {
+    public void getYesNo(@NonNull Component title, @NonNull Player player, @NonNull Consumer<Boolean> callback) {
         Dialog dialog = Dialog.create(builder ->
                 builder.empty()
                         .base(DialogBase.builder(title)

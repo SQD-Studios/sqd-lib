@@ -4,8 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.Plugin;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -38,7 +38,7 @@ public final class SchedulerUtil {
      * @param plugin Plugin which owns the specified task.
      * @param task   specified task
      */
-    public static void runAsync(@NotNull Plugin plugin, @NotNull Runnable task) {
+    public static void runAsync(@NonNull Plugin plugin, @NonNull Runnable task) {
         Bukkit.getAsyncScheduler().runNow(plugin, _ -> task.run());
     }
 
@@ -48,7 +48,7 @@ public final class SchedulerUtil {
      * @param plugin Plugin which owns the task.
      * @param task   The task to execute
      */
-    public static void runSync(@NotNull Plugin plugin, @NotNull Runnable task) {
+    public static void runSync(@NonNull Plugin plugin, @NonNull Runnable task) {
         Bukkit.getGlobalRegionScheduler().run(plugin, _ -> task.run());
     }
 
@@ -65,7 +65,7 @@ public final class SchedulerUtil {
      * @param task    The task to execute
      * @param retired Retire callback to run if the entity is retired before the run callback can be invoked, may be null.
      */
-    public static void runForEntity(@NotNull Plugin plugin, @NotNull Entity entity, @NotNull Runnable task, @Nullable Runnable retired) {
+    public static void runForEntity(@NonNull Plugin plugin, @NonNull Entity entity, @NonNull Runnable task, @Nullable Runnable retired) {
         entity.getScheduler().run(plugin, _ -> task.run(), retired);
     }
 
@@ -76,7 +76,7 @@ public final class SchedulerUtil {
      * @param location The location at which the region executing should own
      * @param task     The task to execute
      */
-    public static void runAtLocation(@NotNull Plugin plugin, @NotNull Location location, @NotNull Runnable task) {
+    public static void runAtLocation(@NonNull Plugin plugin, @NonNull Location location, @NonNull Runnable task) {
         Bukkit.getRegionScheduler().run(plugin, location, _ -> task.run());
     }
 
@@ -87,7 +87,7 @@ public final class SchedulerUtil {
      * @param task       The task to execute
      * @param delayTicks The delay, in ticks
      */
-    public static void runDelayed(@NotNull Plugin plugin, @NotNull Runnable task, long delayTicks) {
+    public static void runDelayed(@NonNull Plugin plugin, @NonNull Runnable task, long delayTicks) {
         Bukkit.getGlobalRegionScheduler().runDelayed(plugin, _ -> task.run(), delayTicks);
     }
 }

@@ -1,9 +1,9 @@
 package net.chamosmp.sqdlib.paper.util;
 
-import net.chamosmp.sqdlib.util.LogType;
+import net.chamosmp.sqdlib.util.log.LogType;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,7 +36,7 @@ public final class ConfigUtil {
      * @param missedKeys The keys to skip when merging the keys
      * @return The loaded {@link YamlConfiguration}
      */
-    public static @NotNull YamlConfiguration loadOrAdapt(@NotNull Plugin plugin, @NotNull String fileName, @NotNull List<String> missedKeys) {
+    public static @NonNull YamlConfiguration loadOrAdapt(@NonNull Plugin plugin, @NonNull String fileName, @NonNull List<String> missedKeys) {
         File file = new File(plugin.getDataFolder(), fileName);
         if (!file.exists()) {
             plugin.saveResource(fileName, false);
@@ -86,7 +86,7 @@ public final class ConfigUtil {
      * @param fileName The name of the file (With the {@code .yml} extension included)
      * @return The loaded {@link YamlConfiguration}
      */
-    public static @NotNull YamlConfiguration loadOrAdapt(@NotNull Plugin plugin, @NotNull String fileName) {
+    public static @NonNull YamlConfiguration loadOrAdapt(@NonNull Plugin plugin, @NonNull String fileName) {
         File file = new File(plugin.getDataFolder(), fileName);
         if (!file.exists()) {
             plugin.saveResource(fileName, false);
@@ -127,7 +127,7 @@ public final class ConfigUtil {
      * @param fileName The name of the file (With the {@code .yml} extension included)
      * @return The loaded {@link YamlConfiguration}
      */
-    public static @NotNull YamlConfiguration loadDataFile(@NotNull Plugin plugin, @NotNull String fileName) {
+    public static @NonNull YamlConfiguration loadDataFile(@NonNull Plugin plugin, @NonNull String fileName) {
         File file = new File(plugin.getDataFolder(), fileName);
         if (!file.exists()) {
             plugin.saveResource(fileName, false);

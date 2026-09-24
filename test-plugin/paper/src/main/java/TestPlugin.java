@@ -1,6 +1,6 @@
 import net.chamosmp.sqdlib.lang.value.DoubleValue;
 import net.chamosmp.sqdlib.paper.util.*;
-import net.chamosmp.sqdlib.util.LogType;
+import net.chamosmp.sqdlib.util.log.LogType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

@@ -1,9 +1,9 @@
 package net.chamosmp.sqdlib.paper.util;
 
-import net.chamosmp.sqdlib.util.LogType;
+import net.chamosmp.sqdlib.util.log.LogType;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.io.File;
 import java.util.HashMap;
@@ -80,7 +80,7 @@ public final class LanguageUtil {
      * @param placeholders The placeholders
      * @return The message
      */
-    public String getMessage(@NotNull String key, @NotNull Map<?, ?> placeholders) {
+    public String getMessage(@NonNull String key, @NonNull Map<?, ?> placeholders) {
         return ColorUtil.placeholder(getMessage(key), placeholders);
     }
 
@@ -90,7 +90,7 @@ public final class LanguageUtil {
      * @param key The key in the config file
      * @return The message
      */
-    public String getMessage(@NotNull String key) {
+    public String getMessage(@NonNull String key) {
         return messages.getOrDefault(key, key);
     }
 }

@@ -1,24 +1,24 @@
 package net.chamosmp.sqdlib.paper.util;
 
 import net.chamosmp.sqdlib.exceptions.LoggerNotInitiatedBeforeUsing;
-import net.chamosmp.sqdlib.util.LogType;
+import net.chamosmp.sqdlib.util.log.LogRecord;
+import net.chamosmp.sqdlib.util.log.LogType;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 /**
  * A utility class for logging (To the console).
  *
- * @see LoggerUtil#log(LogType, String)
+ * @see LoggerUtil#log(LogRecord, String)
  * @see LogType
  */
 public final class LoggerUtil {
 
+    private static LoggerUtil instance;
     private final @Nullable String prefix;
     private final @Nullable Plugin plugin;
-
-    private static LoggerUtil instance;
 
     /**
      * A utility class for logging (To the console).
@@ -27,10 +27,10 @@ public final class LoggerUtil {
      * Use this when you want to send a message to the console sender with a prefix
      *
      * @param prefix the prefix
-     * @see LoggerUtil#log(LogType, String)
+     * @see LoggerUtil#log(LogRecord, String)
      * @see LogType
      */
-    public LoggerUtil(@NotNull String prefix) {
+    public LoggerUtil(@NonNull String prefix) {
         this.prefix = prefix;
         this.plugin = null;
         instance = this;
@@ -43,10 +43,12 @@ public final class LoggerUtil {
      * Use this when you want to use the component logger, instead of sending a message to the console directly.
      *
      * @param plugin The plugin instance
-     * @see LoggerUtil#log(LogType, String)
+     * @see LoggerUtil#log(LogRecord, String)
      * @see LogType
+     * @deprecated This may cause to issues if you use a custom-made {@link LogRecord} instead of the values in {@link LogType}. If you don't use them, feel free to suppress this warning
      */
-    public LoggerUtil(@NotNull Plugin plugin) {
+    @Deprecated
+    public LoggerUtil(@NonNull Plugin plugin) {
         this.plugin = plugin;
         this.prefix = null;
         instance = this;
@@ -60,7 +62,7 @@ public final class LoggerUtil {
      * @param message The message to send (Supports mini message)
      * @throws LoggerNotInitiatedBeforeUsing thrown if a {@link LoggerUtil} instance has never been initiated before
      */
-    public static void log(LogType type, String message) {
+    public static void log(LogRecord type, String message) {
         if (instance.prefix != null) {
             Bukkit.getConsoleSender().sendMessage(ColorUtil.parse(instance.prefix + type.getColor() + message));
         } else if (instance.plugin != null) {
@@ -72,13 +74,15 @@ public final class LoggerUtil {
 
     /**
      * Sends the proper category log, from the {@link LogType}.
+     * If the color comes from a {@link LogRecord} that isn't {@link LogType}, it'll give a debug message
+     * saying that this setup is unsupported
      *
      * @param plugin  The plugin instance
      * @param message The message
      * @param type    The type
      */
-    private static void logWithComponentLogger(Plugin plugin, String message, LogType type) {
-        switch (type) {
+    private static void logWithComponentLogger(Plugin plugin, String message, LogRecord type) {
+        switch (type.getLogType()) {
             case INFO:
                 plugin.getComponentLogger().info(ColorUtil.parse(type.getColor() + message));
                 break;
@@ -87,6 +91,10 @@ public final class LoggerUtil {
                 break;
             case WARNING:
                 plugin.getComponentLogger().warn(ColorUtil.parse(type.getColor() + message));
+                break;
+            case null:
+                plugin.getComponentLogger().debug("It seems this plugin is using an unsupported setup for it's logger. Redirect them the the SQD Studios discord for help");
+                plugin.getComponentLogger().info(ColorUtil.parse(type.getColor() + message));
                 break;
         }
     }

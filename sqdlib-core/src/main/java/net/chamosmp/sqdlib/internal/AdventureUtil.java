@@ -2,7 +2,7 @@ package net.chamosmp.sqdlib.internal;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +14,11 @@ import java.util.Map;
 public class AdventureUtil {
     private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
 
-    protected static @NotNull Component parse(@NotNull String message) {
+    protected static @NonNull Component parse(@NonNull String message) {
         return MINI_MESSAGE.deserialize(legacyToMiniMessage(message));
     }
 
-    protected static @NotNull Component parse(@NotNull String message, @NotNull Map<?, ?> placeholders) {
+    protected static @NonNull Component parse(@NonNull String message, @NonNull Map<?, ?> placeholders) {
         String resolved = message;
         for (var entry : placeholders.entrySet()) {
             resolved = resolved.replace("%" + entry.getKey() + "%", entry.getValue().toString());
@@ -27,7 +27,7 @@ public class AdventureUtil {
         return MINI_MESSAGE.deserialize(legacyToMiniMessage(resolved));
     }
 
-    protected static @NotNull List<String> placeholder(@NotNull List<String> message, @NotNull Map<?, ?> placeholders) {
+    protected static @NonNull List<String> placeholder(@NonNull List<String> message, @NonNull Map<?, ?> placeholders) {
         List<String> resolved = new ArrayList<>(message);
         for (var entry : placeholders.entrySet()) {
             String key = "%" + entry.getKey() + "%";
@@ -37,7 +37,7 @@ public class AdventureUtil {
         return resolved;
     }
 
-    protected static @NotNull String placeholder(@NotNull String message, @NotNull Map<?, ?> placeholders) {
+    protected static @NonNull String placeholder(@NonNull String message, @NonNull Map<?, ?> placeholders) {
         String resolved = message;
         for (var entry : placeholders.entrySet()) {
             resolved = resolved.replace("%" + entry.getKey() + "%", entry.getValue().toString());
@@ -46,7 +46,7 @@ public class AdventureUtil {
         return resolved;
     }
 
-    protected static @NotNull String deParse(@NotNull Component message) {
+    protected static @NonNull String deParse(@NonNull Component message) {
         return MINI_MESSAGE.serialize(message);
     }
 

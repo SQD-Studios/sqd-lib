@@ -5,6 +5,12 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.*;
 
+/**
+ * Provides a list of {@link DoubleValue}s, which adds some more stuff on top of the List stuff
+ *
+ * @param <T> The first value of the {@link DoubleValue}s you want to store
+ * @param <E> The second value of the {@link DoubleValue}s you want to store
+ */
 public class DoubleValueList<T, E> implements List<DoubleValue<T, E>> {
 
     private final List<DoubleValue<T, E>> doubleValue = new ArrayList<>();
@@ -14,6 +20,25 @@ public class DoubleValueList<T, E> implements List<DoubleValue<T, E>> {
         doubleValue.addAll(Arrays.asList(doubleValues));
     }
 
+    /**
+     * Gets a {@link DoubleValueList} from the list of the {@link DoubleValue}s provided
+     *
+     * @param doubleValues The {@link DoubleValue}s to get the list with
+     * @param <First>      What should the first value be?
+     * @param <Second>     What should the second value be?
+     * @return the {@link DoubleValueList}
+     */
+    @SafeVarargs
+    public static <First, Second> DoubleValueList<First, Second> of(DoubleValue<First, Second>... doubleValues) {
+        return new DoubleValueList<>(doubleValues);
+    }
+
+    /**
+     * Tries to get a value, from the other value, null if the value doesn't exist in the list
+     *
+     * @param object The object to get the other value from
+     * @return the other value, null if the {@code object} parameter isn't in the list
+     */
     public @Nullable Object get(Object object) {
         for (DoubleValue<T, E> doubleValue : doubleValue) {
             DoubleValue.ValueType i = doubleValue.contains(object);
@@ -33,12 +58,10 @@ public class DoubleValueList<T, E> implements List<DoubleValue<T, E>> {
         return doubleValue.size();
     }
 
-
     @Override
     public boolean isEmpty() {
         return doubleValue.isEmpty();
     }
-
 
     public boolean contains(Object o) {
         boolean contains = false;
@@ -59,12 +82,10 @@ public class DoubleValueList<T, E> implements List<DoubleValue<T, E>> {
         return doubleValue.toArray();
     }
 
-
     @Override
     public @NonNull <t> t @NonNull [] toArray(@NonNull t @NonNull [] a) {
         return doubleValue.toArray(a);
     }
-
 
     @Override
     public boolean add(DoubleValue<T, E> teDoubleValue) {
@@ -81,12 +102,6 @@ public class DoubleValueList<T, E> implements List<DoubleValue<T, E>> {
         return new HashSet<>(doubleValue).containsAll(c);
     }
 
-
-    public boolean remove(DoubleValue<T, E> o) {
-        return doubleValue.remove(o);
-    }
-
-
     @Override
     public boolean addAll(@NonNull Collection<? extends DoubleValue<T, E>> c) {
         return doubleValue.addAll(c);
@@ -102,11 +117,10 @@ public class DoubleValueList<T, E> implements List<DoubleValue<T, E>> {
         return doubleValue.retainAll(c);
     }
 
-
+    @Override
     public boolean removeAll(@NonNull Collection<?> c) {
         return doubleValue.removeAll(c);
     }
-
 
     @Override
     public void clear() {
@@ -156,10 +170,5 @@ public class DoubleValueList<T, E> implements List<DoubleValue<T, E>> {
     @Override
     public @NonNull List<DoubleValue<T, E>> subList(int fromIndex, int toIndex) {
         return doubleValue.subList(fromIndex, toIndex);
-    }
-
-    @SafeVarargs
-    public static <First, Second> DoubleValueList<First, Second> of(DoubleValue<First, Second>... doubleValues) {
-        return new DoubleValueList<>(doubleValues);
     }
 }

@@ -1,3 +1,6 @@
+/**
+ * Adventure Platform wide utilities, annotations and more!
+ */
 @SupportsPlatforms({Platform.FOLIA, Platform.PAPER, Platform.VELOCITY})
 package net.chamosmp.sqdlib;
 
