@@ -1,0 +1,25 @@
+{
+  "stats": {
+    "minecraft:picked_up": {
+      "minecraft:apple": 1
+    },
+    "minecraft:mined": {
+      "minecraft:oak_leaves": 1
+    },
+    "minecraft:custom": {
+      "minecraft:sprint_one_cm": 16,
+      "minecraft:time_since_rest": 422,
+      "minecraft:fall_one_cm": 1550,
+      "minecraft:walk_one_cm": 916,
+      "minecraft:total_world_time": 569,
+      "minecraft:leave_game": 1,
+      "minecraft:fly_one_cm": 74,
+      "minecraft:crouch_one_cm": 11,
+      "minecraft:sneak_time": 3,
+      "minecraft:play_time": 422,
+      "minecraft:jump": 22,
+      "minecraft:time_since_death": 422
+    }
+  },
+  "DataVersion": 4903
+}

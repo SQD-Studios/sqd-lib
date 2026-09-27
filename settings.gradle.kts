@@ -11,10 +11,6 @@ pluginManagement {
     }
 }
 
-include("sqdlib-core")
-include("sqdlib-paper")
-include("sqdlib-velocity")
-
 fun importProjectsIn(folder: File) {
     val name = folder.name
     rootDir.resolve(name).listFiles { it.isDirectory }?.forEach {
@@ -24,4 +20,4 @@ fun importProjectsIn(folder: File) {
 }
 
 importProjectsIn(rootDir.resolve("test-plugin"))
-include("sqdlib-fabric")
+importProjectsIn(rootDir.resolve("sqdlib"))
