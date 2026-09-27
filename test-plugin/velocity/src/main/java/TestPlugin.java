@@ -1,8 +1,8 @@
 import com.google.inject.Inject;
-import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
+import net.chamomsp.sqdlib.velocity.VelocityPlugin;
 import net.chamomsp.sqdlib.velocity.util.LoggerUtil;
 import net.chamosmp.sqdlib.util.log.LogType;
 import org.slf4j.Logger;
@@ -12,7 +12,7 @@ import org.slf4j.Logger;
         name = "My Plugin",
         version = "1.0.0"
 )
-public class TestPlugin {
+public class TestPlugin extends VelocityPlugin {
 
     private final ProxyServer server;
 
@@ -21,9 +21,8 @@ public class TestPlugin {
         this.server = server;
     }
 
-    @Subscribe
-    public void onInit(ProxyInitializeEvent event) {
-        new LoggerUtil("Lil prefix", server);
+    public void onProxyInitialize(ProxyInitializeEvent event) {
+        new LoggerUtil("Lil prefix ", server);
 
         LoggerUtil.log(LogType.INFO, "Hi");
     }
