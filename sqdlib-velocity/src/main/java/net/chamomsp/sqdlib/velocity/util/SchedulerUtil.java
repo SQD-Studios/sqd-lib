@@ -1,6 +1,7 @@
 package net.chamomsp.sqdlib.velocity.util;
 
 import com.velocitypowered.api.proxy.ProxyServer;
+import net.chamomsp.sqdlib.velocity.VelocityPlugin;
 import org.checkerframework.common.value.qual.IntRange;
 import org.jetbrains.annotations.ApiStatus;
 import org.jspecify.annotations.NonNull;
@@ -39,7 +40,7 @@ public final class SchedulerUtil {
      * @apiNote All tasks in velocity are async, so this is useless
      */
     @ApiStatus.Obsolete
-    public static void runAsync(@NonNull ProxyServer server, @NonNull Object plugin, @NonNull Runnable task) {
+    public static void runAsync(@NonNull ProxyServer server, @NonNull VelocityPlugin plugin, @NonNull Runnable task) {
         server.getScheduler()
                 .buildTask(plugin, task)
                 .schedule();
@@ -54,7 +55,7 @@ public final class SchedulerUtil {
      * @param time   The time to repeat it for
      * @param unit   The unit to repeat the time for
      */
-    public static void runRepeated(@NonNull ProxyServer server, @NonNull Object plugin, @NonNull Runnable task, @IntRange(from = 0L) long time, @NonNull TimeUnit unit) {
+    public static void runRepeated(@NonNull ProxyServer server, @NonNull VelocityPlugin plugin, @NonNull Runnable task, @IntRange(from = 0L) long time, @NonNull TimeUnit unit) {
         server.getScheduler()
                 .buildTask(plugin, task)
                 .repeat(time, unit)
@@ -70,7 +71,7 @@ public final class SchedulerUtil {
      * @param time   The time to delay it for
      * @param unit   The unit to delay the time for
      */
-    public static void runDelayed(@NonNull ProxyServer server, @NonNull Object plugin, @NonNull Runnable task, @IntRange(from = 0L) long time, @NonNull TimeUnit unit) {
+    public static void runDelayed(@NonNull ProxyServer server, @NonNull VelocityPlugin plugin, @NonNull Runnable task, @IntRange(from = 0L) long time, @NonNull TimeUnit unit) {
         server.getScheduler()
                 .buildTask(plugin, task)
                 .delay(time, unit)

@@ -5,6 +5,7 @@ import com.velocitypowered.api.event.player.ServerPostConnectEvent;
 import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
+import net.chamomsp.sqdlib.velocity.VelocityPlugin;
 import net.chamosmp.sqdlib.internal.InternalUpdater;
 import net.chamosmp.sqdlib.util.log.LogType;
 
@@ -26,22 +27,22 @@ public class UpdateUtil implements InternalUpdater {
     /**
      * A utility class for showing your users that the plugin has an update available
      *
-     * @param pluginInstance The plugin instance (As an object)
-     * @param modrinthId     The Modrinth project id (Or slug)
-     * @param downloadUrl    The download url
+     * @param plugin      The plugin instance (As an object)
+     * @param modrinthId  The Modrinth project id (Or slug)
+     * @param downloadUrl The download url
      * @apiNote Only supports Modrinth. You also don't need to register this as a listener
      * @see UpdateUtil#versionCheck()
      * @see UpdateUtil#onConnect(ServerPostConnectEvent)
      */
-    public UpdateUtil(ProxyServer server, Object pluginInstance, String modrinthId, String downloadUrl) {
+    public UpdateUtil(ProxyServer server, VelocityPlugin plugin, String modrinthId, String downloadUrl) {
         this.mrId = modrinthId;
         this.downloadUrl = downloadUrl;
 
-        PluginContainer pluginContainer = server.getPluginManager().ensurePluginContainer(pluginInstance);
+        PluginContainer pluginContainer = server.getPluginManager().ensurePluginContainer(plugin);
         this.pluginVer = pluginContainer.getDescription().getVersion().orElse("failed");
         this.pluginName = pluginContainer.getDescription().getName().orElse("sqdplugin");
 
-        server.getEventManager().register(pluginInstance, this);
+        server.getEventManager().register(plugin, this);
     }
 
     /**
