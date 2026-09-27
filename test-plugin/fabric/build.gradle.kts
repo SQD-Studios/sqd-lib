@@ -1,5 +1,5 @@
 plugins {
-    id("shared")
+    id("test")
     id("net.fabricmc.fabric-loom") version "1.18-SNAPSHOT"
 }
 
