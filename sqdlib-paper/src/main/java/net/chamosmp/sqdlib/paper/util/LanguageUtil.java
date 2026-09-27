@@ -6,7 +6,6 @@ import org.bukkit.plugin.Plugin;
 import org.jspecify.annotations.NonNull;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Map;
 
 import static net.chamosmp.sqdlib.paper.util.LoggerUtil.log;
@@ -20,7 +19,7 @@ import static net.chamosmp.sqdlib.paper.util.LoggerUtil.log;
 public final class LanguageUtil {
 
     private final Plugin plugin;
-    private final Map<String, String> messages = new HashMap<>();
+    private YamlConfiguration config;
 
     /**
      * A utility class to make language files, and read from them
@@ -34,10 +33,12 @@ public final class LanguageUtil {
      */
     public LanguageUtil(Plugin plugin) {
         this.plugin = plugin;
+
         File langDir = new File(plugin.getDataFolder(), "lang");
         if (!langDir.exists()) {
             langDir.mkdirs();
         }
+
         String langCode = plugin.getConfig().getString("language", "en");
         loadLanguage(langCode);
     }
@@ -48,28 +49,10 @@ public final class LanguageUtil {
      */
     private void loadLanguage(String langCode) {
         try {
-            YamlConfiguration yaml = ConfigUtil.loadOrAdapt(plugin, "lang/" + langCode + ".yml");
-            messages.clear();
-            flatten("", yaml.getValues(true));
-            log(LogType.INFO, "Loaded current language: " + langCode + " (" + messages.size() + " messages)");
+            config = ConfigUtil.loadOrAdapt(plugin, "lang/" + langCode + ".yml");
+            log(LogType.INFO, "Loaded language: " + langCode);
         } catch (Exception e) {
             log(LogType.SEVERE, "Failed to load language file: " + langCode + ". Exception: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Recursively flattens nested YAML keys into dot‑notation.
-     * e.g. messages.already-owned > "messages.already-owned"
-     */
-    @SuppressWarnings("unchecked")
-    private void flatten(String prefix, Map<String, Object> source) {
-        for (Map.Entry<String, Object> entry : source.entrySet()) {
-            String key = prefix.isEmpty() ? entry.getKey() : prefix + "." + entry.getKey();
-            if (entry.getValue() instanceof Map) {
-                flatten(key, (Map<String, Object>) entry.getValue());
-            } else {
-                messages.put(key, entry.getValue().toString());
-            }
         }
     }
 
@@ -80,7 +63,7 @@ public final class LanguageUtil {
      * @param placeholders The placeholders
      * @return The message
      */
-    public String getMessage(@NonNull String key, @NonNull Map<?, ?> placeholders) {
+    public @NonNull String getMessage(@NonNull String key, @NonNull Map<?, ?> placeholders) {
         return ColorUtil.placeholder(getMessage(key), placeholders);
     }
 
@@ -90,7 +73,7 @@ public final class LanguageUtil {
      * @param key The key in the config file
      * @return The message
      */
-    public String getMessage(@NonNull String key) {
-        return messages.getOrDefault(key, key);
+    public @NonNull String getMessage(@NonNull String key) {
+        return config.getString(key, key);
     }
 }
