@@ -1,5 +1,16 @@
 rootProject.name = "sqd-lib"
 
+pluginManagement {
+    repositories {
+        maven {
+            name = "Fabric"
+            url = uri("https://maven.fabricmc.net/")
+        }
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
 include("sqdlib-core")
 include("sqdlib-paper")
 include("sqdlib-velocity")
@@ -13,3 +24,4 @@ fun importProjectsIn(folder: File) {
 }
 
 importProjectsIn(rootDir.resolve("test-plugin"))
+include("sqdlib-fabric")

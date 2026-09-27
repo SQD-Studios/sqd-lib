@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "sqd-lib",
+  "version": "3.0.0",
+  "name": "SQDLib",
+  "authors": [
+    "SQD Studios"
+  ],
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.chamosmp.sqdlib.fabric.mod.SqdlibMod"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.3",
+    "minecraft": "~26.2",
+    "java": ">=25",
+    "fabric-api": "*"
+  }
+}

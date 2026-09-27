@@ -10,5 +10,6 @@ public enum Platform {
     BUKKIT,
     VELOCITY,
     BUNGEECORD,
+    FABRIC,
     ALL
 }
