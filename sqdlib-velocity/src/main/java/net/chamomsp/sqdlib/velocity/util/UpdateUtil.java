@@ -2,7 +2,7 @@ package net.chamomsp.sqdlib.velocity.util;
 
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.ServerPostConnectEvent;
-import com.velocitypowered.api.plugin.PluginContainer;
+import com.velocitypowered.api.plugin.PluginDescription;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.chamomsp.sqdlib.velocity.VelocityPlugin;
@@ -38,9 +38,9 @@ public class UpdateUtil implements InternalUpdater {
         this.mrId = modrinthId;
         this.downloadUrl = downloadUrl;
 
-        PluginContainer pluginContainer = server.getPluginManager().ensurePluginContainer(plugin);
-        this.pluginVer = pluginContainer.getDescription().getVersion().orElse("failed");
-        this.pluginName = pluginContainer.getDescription().getName().orElse("sqdplugin");
+        PluginDescription pluginContainer = plugin.getDescription();
+        this.pluginVer = pluginContainer.getVersion().orElse("failed");
+        this.pluginName = pluginContainer.getName().orElse("sqdplugin");
 
         server.getEventManager().register(plugin, this);
     }
