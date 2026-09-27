@@ -21,3 +21,5 @@ fun importProjectsIn(folder: File) {
 
 importProjectsIn(rootDir.resolve("test-plugin"))
 importProjectsIn(rootDir.resolve("sqdlib"))
+
+includeBuild("build-logic")
