@@ -1,29 +1,28 @@
 package net.chamosmp.sqdlib.fabric.util;
 
-import net.chamosmp.sqdlib.util.log.LogType;
-import org.jspecify.annotations.NonNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import net.chamosmp.sqdlib.exceptions.LoggerNotInitiatedBeforeUsing;
+import net.chamosmp.sqdlib.fabric.FabricMod;
+import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
+import org.jetbrains.annotations.ApiStatus;
 
 public class LoggerUtil {
 
-    private static Logger logger;
+    private static final ComponentLogger internalLogger = ComponentLogger.logger("SQDLib");
+    private static ComponentLogger logger;
 
-    /**
-     * A utility class for logging (To the console).
-     * <p>
-     * <p>
-     * Use this when you want to send a message to the console sender with a prefix
-     *
-     * @param prefix the prefix
-     * @see LoggerUtil#getLogger()
-     * @see LogType
-     */
-    public LoggerUtil(@NonNull String prefix) {
-        logger = LoggerFactory.getLogger(prefix);
+    public LoggerUtil(FabricMod fabricMod) {
+        logger = ComponentLogger.logger(fabricMod.getModMetadata().getName());
     }
 
-    public static Logger getLogger() {
+    public static ComponentLogger getLogger() {
+        if (logger == null) {
+            throw new LoggerNotInitiatedBeforeUsing("");
+        }
         return logger;
+    }
+
+    @ApiStatus.Internal
+    public static ComponentLogger getInternalLogger() {
+        return internalLogger;
     }
 }

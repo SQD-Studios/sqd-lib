@@ -10,7 +10,7 @@ public class MyMod extends FabricMod {
     @Override
     public void onInitialize() {
         // noinspection all
-        new LoggerUtil("MyMod ");
+        new LoggerUtil(this);
 
         LoggerUtil.getLogger().info("Successfully loaded!");
 

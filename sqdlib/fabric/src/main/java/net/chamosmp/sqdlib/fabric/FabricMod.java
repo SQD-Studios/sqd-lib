@@ -2,8 +2,8 @@ package net.chamosmp.sqdlib.fabric;
 
 import net.chamosmp.sqdlib.fabric.config.file.FileConfiguration;
 import net.chamosmp.sqdlib.fabric.config.file.YamlConfiguration;
+import net.chamosmp.sqdlib.fabric.util.ColorUtil;
 import net.chamosmp.sqdlib.fabric.util.LoggerUtil;
-import net.chamosmp.sqdlib.util.log.LogType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
@@ -33,6 +33,8 @@ public class FabricMod implements ModInitializer {
         this.dataDirectory = FabricLoader.getInstance().getConfigDir().resolve(modid);
         this.classLoader = this.getClass().getClassLoader();
         this.configFile = this.dataDirectory.resolve("config.yml").toFile();
+
+        LoggerUtil.getInternalLogger().info(ColorUtil.parse("Loaded mod " + modid));
     }
 
     @Override
