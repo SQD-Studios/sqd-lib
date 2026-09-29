@@ -34,6 +34,8 @@ public class FabricMod implements ModInitializer {
         this.classLoader = this.getClass().getClassLoader();
         this.configFile = this.dataDirectory.resolve("config.yml").toFile();
 
+        // noinspection all
+        new LoggerUtil(this);
         LoggerUtil.getInternalLogger().info(ColorUtil.parse("Loaded mod " + modid));
     }
 

@@ -9,9 +9,6 @@ public class MyMod extends FabricMod {
 
     @Override
     public void onInitialize() {
-        // noinspection all
-        new LoggerUtil(this);
-
         LoggerUtil.getLogger().info("Successfully loaded!");
 
         getDataDirectory().toFile().mkdirs();
