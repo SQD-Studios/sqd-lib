@@ -1,4 +1,5 @@
 import net.chamosmp.sqdlib.lang.value.DoubleValue;
+import net.chamosmp.sqdlib.paper.dialog.SimpleDialog;
 import net.chamosmp.sqdlib.paper.util.*;
 import net.chamosmp.sqdlib.util.log.LogType;
 import org.bukkit.Bukkit;
@@ -26,7 +27,7 @@ public class TestPlugin extends JavaPlugin implements Listener {
         Player player = event.getPlayer();
         player.sendMessage(ColorUtil.parse(player, "Hello there!"));
 
-        new DialogUtil(this).getYesNo(ColorUtil.parse("Yes or no?"), player, b -> {
+        new SimpleDialog(this).getYesNo(ColorUtil.parse("Yes or no?"), player, b -> {
             if (b) {
                 LoggerUtil.log(LogType.INFO, "The player said yes");
                 crashPlugin();

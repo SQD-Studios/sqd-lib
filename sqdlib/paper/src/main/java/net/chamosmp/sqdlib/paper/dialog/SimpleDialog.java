@@ -1,4 +1,4 @@
-package net.chamosmp.sqdlib.paper.util;
+package net.chamosmp.sqdlib.paper.dialog;
 
 import io.papermc.paper.connection.PlayerGameConnection;
 import io.papermc.paper.dialog.Dialog;
@@ -9,6 +9,7 @@ import io.papermc.paper.registry.data.dialog.DialogBase;
 import io.papermc.paper.registry.data.dialog.action.DialogAction;
 import io.papermc.paper.registry.data.dialog.input.DialogInput;
 import io.papermc.paper.registry.data.dialog.type.DialogType;
+import net.chamosmp.sqdlib.paper.util.ColorUtil;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
@@ -29,10 +30,10 @@ import java.util.function.Consumer;
 /**
  * A utility class for making dialogs, and doing actions with them
  *
- * @see DialogUtil#getInput(Component, Player, String, Component, String, Consumer)
- * @see DialogUtil#getYesNo(Component, Player, Consumer)
+ * @see SimpleDialog#getInput(Component, Player, String, Component, String, Consumer)
+ * @see SimpleDialog#getYesNo(Component, Player, Consumer)
  */
-public class DialogUtil implements Listener {
+public class SimpleDialog implements Listener {
 
     private final Map<UUID, Map<String, Consumer<String>>> pending = new ConcurrentHashMap<>();
 
@@ -45,10 +46,10 @@ public class DialogUtil implements Listener {
      * Registers the class as a listener
      *
      * @param plugin The plugin instance
-     * @see DialogUtil#getInput(Component, Player, String, Component, String, Consumer)
-     * @see DialogUtil#getYesNo(Component, Player, Consumer)
+     * @see SimpleDialog#getInput(Component, Player, String, Component, String, Consumer)
+     * @see SimpleDialog#getYesNo(Component, Player, Consumer)
      */
-    public DialogUtil(Plugin plugin) {
+    public SimpleDialog(Plugin plugin) {
         this.plugin = plugin;
 
         Bukkit.getPluginManager().registerEvents(this, plugin);
@@ -153,10 +154,7 @@ public class DialogUtil implements Listener {
         String path = id.value();
 
         if (!id.namespace().equals(plugin.getPluginMeta().getName().toLowerCase())) return;
-
-        boolean isConfirm = path.endsWith("/confirm");
-
-        if (!isConfirm) return;
+        if (!path.endsWith("/confirm")) return;
 
         if (!(event.getCommonConnection() instanceof PlayerGameConnection conn)) return;
         Player player = conn.getPlayer();
