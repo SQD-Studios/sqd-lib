@@ -2,6 +2,7 @@ package net.chamosmp.sqdlib.paper.util;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.chamosmp.sqdlib.internal.AdventureUtil;
+import net.chamosmp.sqdlib.util.log.LogType;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -37,7 +38,7 @@ public final class ColorUtil extends AdventureUtil {
      * @return the colored message
      */
     public static @NonNull Component parse(@NonNull String message) {
-        if (PAPI_PRESENT) {
+        if (PAPI_PRESENT && canAccessPapi()) {
             return AdventureUtil.parse(PlaceholderAPI.setPlaceholders(null, message));
         } else {
             return AdventureUtil.parse(message);
@@ -55,7 +56,7 @@ public final class ColorUtil extends AdventureUtil {
      * @return the colored message
      */
     public static @NonNull Component parse(@Nullable Player player, @NonNull String message) {
-        if (PAPI_PRESENT) {
+        if (PAPI_PRESENT && canAccessPapi()) {
             return AdventureUtil.parse(PlaceholderAPI.setPlaceholders(player, message));
         } else {
             return AdventureUtil.parse(message);
@@ -76,7 +77,7 @@ public final class ColorUtil extends AdventureUtil {
     public static @NonNull Component parse(@Nullable Player player, @NonNull String message, @NonNull Map<?, ?> placeholders) {
         message = AdventureUtil.placeholder(message, placeholders);
 
-        if (PAPI_PRESENT) {
+        if (PAPI_PRESENT && canAccessPapi()) {
             message = PlaceholderAPI.setPlaceholders(player, message);
         }
 
@@ -123,5 +124,19 @@ public final class ColorUtil extends AdventureUtil {
      */
     public static String legacyToMiniMessage(String message) {
         return AdventureUtil.legacyToMiniMessage(message);
+    }
+
+    /**
+     * This may happen if we don't have access to PlaceholderAPI's classpath, which also happens
+     * if this library is loaded through the paper loader
+     */
+    private static boolean canAccessPapi() {
+        try {
+            Class.forName("me.clip.placeholderapi.PlaceholderAPI");
+            DebugLogger.log(LogType.WARNING, "We cannot access PlaceholderAPI! Please add it to your dependencies (With access class path if is paper plugin). If you've already done that, and it doesn't work make sure you're shading the plugin and not loading it from the library loader. If you believe this is intentional, you can ignore this (And you can turn debug off)");
+            return true;
+        } catch (ClassNotFoundException _) {
+            return false;
+        }
     }
 }
