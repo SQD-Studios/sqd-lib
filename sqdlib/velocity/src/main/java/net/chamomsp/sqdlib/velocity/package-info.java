@@ -1,4 +1,3 @@
-@ApiStatus.Experimental
 @SupportsPlatforms(Platform.VELOCITY)
 package net.chamomsp.sqdlib.velocity;
 
