@@ -1,20 +1,6 @@
 plugins {
-    id("java-library")
+    id("test")
     id("maven-publish")
-}
-
-group = "net.chamosmp.sqdlib"
-version = "3.1.0"
-
-repositories {
-    maven {
-        name = "PaperMC"
-        url = uri("https://repo.papermc.io/repository/maven-public/")
-    }
-    maven {
-        url = uri("https://repo.extendedclip.com/releases/")
-    }
-    mavenCentral()
 }
 
 java {

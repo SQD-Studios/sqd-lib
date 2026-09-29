@@ -1,9 +1,9 @@
 plugins {
-    id("java")
+    id("java-library")
 }
 
-group = "net.chamosmp.sqdlib.test"
-version = "1.1.3"
+group = "net.chamosmp.sqdlib"
+version = "3.1.0"
 
 repositories {
     maven {
