@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 /**
  * An annotation used to show which platforms certain code works in.
  */
-@Retention(RetentionPolicy.RUNTIME)
+@Retention(RetentionPolicy.SOURCE)
 @Target({ElementType.METHOD, ElementType.TYPE, ElementType.PACKAGE})
 public @interface SupportsPlatforms {
 

@@ -5,7 +5,7 @@ import org.jspecify.annotations.NonNull;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-@Retention(RetentionPolicy.RUNTIME)
+@Retention(RetentionPolicy.SOURCE)
 public @interface SupportsColorSystems {
 
     @NonNull ColorSystem value();
