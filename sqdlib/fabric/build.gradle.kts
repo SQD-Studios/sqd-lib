@@ -13,3 +13,11 @@ dependencies {
     api("org.yaml:snakeyaml:2.2")
     api(include("net.kyori:adventure-platform-fabric:7.1.1")!!)
 }
+
+tasks {
+    processResources {
+        filesMatching("fabric.mod.json") {
+            expand("version" to rootProject.version)
+        }
+    }
+}
