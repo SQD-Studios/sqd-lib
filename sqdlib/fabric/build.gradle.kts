@@ -15,8 +15,12 @@ dependencies {
 
 tasks {
     processResources {
+        val props = mapOf("version" to project.version)
+        inputs.properties(props)
+        filteringCharset = "UTF-8"
+
         filesMatching("fabric.mod.json") {
-            expand("version" to project.version)
+            expand(props)
         }
     }
 }
