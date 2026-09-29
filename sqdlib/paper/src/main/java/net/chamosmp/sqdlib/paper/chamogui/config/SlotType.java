@@ -6,7 +6,7 @@ import org.bukkit.configuration.ConfigurationSection;
 /**
  * Represents the action of a certain Item in a slot
  */
-public sealed interface SlotType {
+public interface SlotType {
     /**
      * Does nothing (Aka Decoration)
      */
