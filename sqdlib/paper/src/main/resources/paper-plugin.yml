@@ -3,6 +3,8 @@ version: "${version}"
 main: net.chamosmp.sqdlib.paper.plugin.SqdlibPlugin
 api-version: "1.21"
 
+folia-supported: true
+
 website: "https://github.com/SQD-Studios/sqd-lib"
 authors: ["SQD Studios"]
 
