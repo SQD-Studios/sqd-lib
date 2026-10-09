@@ -3,5 +3,5 @@ plugins {
 }
 
 dependencies {
-    compileOnly("net.kyori:adventure-text-minimessage:5.2.0")
+    compileOnlyApi("net.kyori:adventure-text-minimessage:5.2.0")
 }

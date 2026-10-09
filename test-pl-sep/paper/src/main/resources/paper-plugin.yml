@@ -1,0 +1,11 @@
+name: TestPlugin
+version: 1.0.0
+main: TestPlugin
+api-version: "26.2"
+
+dependencies:
+  server:
+    SQDLib:
+      load: BEFORE
+      required: true
+      join-classpath: true

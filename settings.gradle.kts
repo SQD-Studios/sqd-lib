@@ -19,6 +19,7 @@ fun importProjectsIn(folder: File) {
     }
 }
 
+importProjectsIn(rootDir.resolve("test-pl-sep"))
 importProjectsIn(rootDir.resolve("test-plugin"))
 importProjectsIn(rootDir.resolve("sqdlib"))
 

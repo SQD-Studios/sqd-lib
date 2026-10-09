@@ -1,0 +1,9 @@
+{
+
+  "id": "sqd-lib",
+  "main": "net.chamomsp.sqdlib.velocity.plugin.SqdlibPlugin",
+  "name": "SQDLib",
+  "version": "${version}",
+  "url": "https://github.com/SQD-Studios/sqd-lib",
+  "authors": ["SQD Studios"]
+}

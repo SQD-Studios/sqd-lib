@@ -1,6 +1,6 @@
 plugins {
     id("test")
-    id("xyz.jpenilla.run-velocity") version "3.1.0"
+    id("xyz.jpenilla.run-velocity") version "3.1.0" apply true
     id("com.gradleup.shadow") version "9.6.1"
 }
 

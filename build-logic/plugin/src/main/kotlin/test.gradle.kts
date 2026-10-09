@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "net.chamosmp.sqdlib"
-version = "3.1.1"
+version = "3.2.0-BETA"
 
 repositories {
     maven {
@@ -13,5 +13,6 @@ repositories {
     maven {
         url = uri("https://repo.extendedclip.com/releases/")
     }
+    maven("https://jitpack.io")
     mavenCentral()
 }
