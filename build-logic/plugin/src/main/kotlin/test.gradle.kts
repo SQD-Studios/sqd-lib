@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "net.chamosmp.sqdlib"
-version = "3.2.0-BETA"
+version = "3.2.0"
 
 repositories {
     maven {
