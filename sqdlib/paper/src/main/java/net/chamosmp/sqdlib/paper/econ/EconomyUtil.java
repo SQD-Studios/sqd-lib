@@ -9,24 +9,29 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
+import java.util.Objects;
+
 import static org.bukkit.Bukkit.getServer;
 
 public class EconomyUtil {
-    private static Economy economy;
+
+    private static EconomyUtil instance;
+    private final Economy economy;
 
     public EconomyUtil() {
         RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
         if (rsp == null) {
-            LoggerUtil.log(LogType.SEVERE, "Vault economy setup failed. Disabling ChamoOrders plugin...");
+            LoggerUtil.log(LogType.SEVERE, "Vault economy setup failed!");
             LoggerUtil.log(LogType.SEVERE, "Please ensure that Vault and a compatible economy plugin are installed.");
             throw new PluginNotFoundException("Could not find Vault and a compatible economy plugin.");
         }
 
         economy = rsp.getProvider();
+        instance = this;
     }
 
-    public Economy getEconomy() {
-        return economy;
+    public static Economy getEconomy() {
+        return get().economy;
     }
 
     /**
@@ -40,7 +45,7 @@ public class EconomyUtil {
         if (Double.isNaN(amount) || amount < 0) {
             return TransactionType.LESS_THAN_ZERO_D;
         }
-        if (economy.depositPlayer(player, amount).transactionSuccess()) {
+        if (get().economy.depositPlayer(player, amount).transactionSuccess()) {
             return TransactionType.TRANSACTION_SUCCESS;
         }
         return TransactionType.TRANSACTION_FAILED;
@@ -57,10 +62,10 @@ public class EconomyUtil {
         if (Double.isNaN(amount) || amount < 0) {
             return TransactionType.LESS_THAN_ZERO_W;
         }
-        if (!economy.has(player, amount)) {
+        if (!get().economy.has(player, amount)) {
             return TransactionType.NOT_SUFFICIENT_FUNDS;
         }
-        if (economy.withdrawPlayer(player, amount).transactionSuccess()) {
+        if (get().economy.withdrawPlayer(player, amount).transactionSuccess()) {
             return TransactionType.TRANSACTION_SUCCESS;
         }
         return TransactionType.TRANSACTION_FAILED;
@@ -175,5 +180,9 @@ public class EconomyUtil {
             DEPOSIT,
             BOTH
         }
+    }
+
+    public static EconomyUtil get() {
+        return Objects.requireNonNullElseGet(instance, EconomyUtil::new);
     }
 }

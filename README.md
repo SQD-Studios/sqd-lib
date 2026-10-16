@@ -43,7 +43,8 @@ plugins {
 }
 
 dependencies {
-    // Replace 3.2.0-BETA with the latest version, and you can replace paper with velocity
+    // Replace 3.2.0-BETA with the latest version, and you can replace "paper", with the following platforms:
+    // velocity, bungee, spigot
     implementation("net.chamosmp.sqdlib:sqdlib-paper:3.2.0-BETA")
 }
 
@@ -90,7 +91,8 @@ found exceptions
 
 ```kotlin
 dependencies {
-    // Replace 3.2.0-BETA with the latest version, and you can replace paper with velocity
+    // Replace 3.2.0-BETA with the latest version, and you can replace "paper", with the following platforms:
+    // velocity, bungee, spigot
     compileOnly("net.chamosmp.sqdlib:sqdlib-paper:3.2.0-BETA")
 }
 ```

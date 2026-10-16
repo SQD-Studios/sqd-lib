@@ -14,5 +14,7 @@ repositories {
         url = uri("https://repo.extendedclip.com/releases/")
     }
     maven("https://jitpack.io")
+    maven("https://hub.spigotmc.org/nexus/content/groups/public/")
+    maven("https://maven.chamosmp.net/releases")
     mavenCentral()
 }

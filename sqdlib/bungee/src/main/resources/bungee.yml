@@ -1,0 +1,7 @@
+name: "SQDLib"
+version: "${version}"
+main: com.sqdstudios.sqdlib.bungee.plugin.SqdlibPlugin
+api-version: "1.21"
+
+website: "https://github.com/SQD-Studios/sqd-lib"
+author: "SQD Studios"

@@ -1,7 +1,7 @@
 package net.chamomsp.sqdlib.velocity.util;
 
+import com.sqdstudios.bukkit.configuration.file.YamlConfiguration;
 import net.chamomsp.sqdlib.velocity.VelocityPlugin;
-import net.chamomsp.sqdlib.velocity.config.file.YamlConfiguration;
 import net.chamosmp.sqdlib.util.log.LogType;
 import org.jspecify.annotations.NonNull;
 

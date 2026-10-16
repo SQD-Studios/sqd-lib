@@ -1,12 +1,12 @@
 package net.chamomsp.sqdlib.velocity;
 
+import com.sqdstudios.bukkit.configuration.file.FileConfiguration;
+import com.sqdstudios.bukkit.configuration.file.YamlConfiguration;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.plugin.PluginDescription;
 import com.velocitypowered.api.proxy.ProxyServer;
-import net.chamomsp.sqdlib.velocity.config.file.FileConfiguration;
-import net.chamomsp.sqdlib.velocity.config.file.YamlConfiguration;
 import net.chamomsp.sqdlib.velocity.util.LoggerUtil;
 import net.chamosmp.sqdlib.util.log.LogType;
 import org.jetbrains.annotations.ApiStatus;

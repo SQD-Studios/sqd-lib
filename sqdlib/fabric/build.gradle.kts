@@ -10,6 +10,7 @@ dependencies {
     compileOnly("net.fabricmc:fabric-loader:0.19.3")
 
     implementation("org.yaml:snakeyaml:2.2")
+    api("com.sqdstudios.bukkit.configuration:config-api:1.0.0")
     api(include("net.kyori:adventure-platform-fabric:7.1.1")!!)
 }
 

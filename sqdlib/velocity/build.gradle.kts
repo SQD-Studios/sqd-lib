@@ -7,6 +7,7 @@ plugins {
 
 dependencies {
     api(project(":sqdlib-core"))
+    api("com.sqdstudios.bukkit.configuration:config-api:1.0.0")
 
     compileOnly("com.velocitypowered:velocity-api:4.1.1-SNAPSHOT")
 }
