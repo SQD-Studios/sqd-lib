@@ -1,7 +1,7 @@
 package net.chamosmp.sqdlib.fabric;
 
-import net.chamosmp.sqdlib.fabric.config.file.FileConfiguration;
-import net.chamosmp.sqdlib.fabric.config.file.YamlConfiguration;
+import com.sqdstudios.bukkit.configuration.file.FileConfiguration;
+import com.sqdstudios.bukkit.configuration.file.YamlConfiguration;
 import net.chamosmp.sqdlib.fabric.util.ColorUtil;
 import net.chamosmp.sqdlib.fabric.util.LoggerUtil;
 import net.fabricmc.api.ModInitializer;

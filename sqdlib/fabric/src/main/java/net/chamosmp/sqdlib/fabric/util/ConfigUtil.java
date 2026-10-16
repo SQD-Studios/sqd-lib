@@ -1,7 +1,7 @@
 package net.chamosmp.sqdlib.fabric.util;
 
+import com.sqdstudios.bukkit.configuration.file.YamlConfiguration;
 import net.chamosmp.sqdlib.fabric.FabricMod;
-import net.chamosmp.sqdlib.fabric.config.file.YamlConfiguration;
 import org.jspecify.annotations.NonNull;
 
 import java.io.File;
