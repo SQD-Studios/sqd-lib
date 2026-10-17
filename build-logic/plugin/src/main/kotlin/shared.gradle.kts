@@ -14,6 +14,15 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             from(components["java"])
+            pom {
+                name.set("sqdlib")
+                url.set("https://github.com/SQD-Studios/sqd-lib")
+                scm {
+                    url.set("https://github.com/SQD-Studios/sqd-lib")
+                    connection.set("scm:git:https://github.com/SQD-Studios/sqd-lib.git")
+                    developerConnection.set("scm:git:ssh://git@github.com/SQD-Studios/sqd-lib.git")
+                }
+            }
         }
     }
     repositories {
