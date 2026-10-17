@@ -1,7 +1,7 @@
 plugins {
     id("shared")
-    id("xyz.jpenilla.run-paper") version "3.1.0" apply true
-    id("com.gradleup.shadow") version "9.6.1"
+    alias(libs.plugins.run.paper) apply true
+    alias(libs.plugins.shadowjar)
 }
 
 dependencies {
@@ -10,14 +10,14 @@ dependencies {
     }
 
     // Plugin APIs
-    compileOnlyApi("com.github.MilkBowl:VaultAPI:1.7.1")
+    compileOnly(libs.vault)
 
-    compileOnly("org.spigotmc:spigot-api:26.+")
+    compileOnly(libs.spigotapi)
 }
 
 tasks {
     runServer {
-        minecraftVersion("26.2")
+        minecraftVersion(libs.versions.minecraft.get())
     }
 
     processResources {

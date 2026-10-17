@@ -1,0 +1,50 @@
+[versions]
+
+run-task = "3.1.0"
+shadow = "9.6.1"
+
+config-api = "1.0.0"
+snakeyaml = "2.2"
+adventure = "5.2.0"
+mod-platform = "7.2.0"
+
+fabric-loom = "1.18-SNAPSHOT"
+fabric-loader = "0.19.3"
+
+minecraft = "26.3"
+paperapi = "26.3.build.+"
+velocity = "4.1.+"
+bungee = "26.+"
+spigot = "26.+"
+
+waterfall = "1.21"
+
+vault = "1.7.1"
+placeholderapi = "2.12.3"
+
+[libraries]
+
+paperapi = { module = "io.papermc.paper:paper-api", version.ref = "paperapi" }
+velocityapi = { module = "com.velocitypowered:velocity-api", version.ref = "velocity" }
+minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
+bungee = { module = "net.md-5:bungeecord-api", version.ref = "bungee" }
+spigotapi = { module = "org.spigotmc:spigot-api", version.ref = "spigot" }
+fabric-loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric-loader" }
+
+vault = { module = "com.github.MilkBowl:VaultAPI", version.ref = "vault" }
+placeholderapi = { module = "me.clip:placeholderapi", version.ref = "placeholderapi" }
+
+bukkitconfig = { module = "com.sqdstudios.bukkit.configuration:config-api", version.ref = "config-api" }
+snakeyaml = { module = "org.yaml:snakeyaml", version.ref = "snakeyaml" }
+adventure-mod = { module = "net.kyori:adventure-platform-fabric", version.ref = "mod-platform" }
+adventure-minimessage = { module = "net.kyori:adventure-text-minimessage", version.ref = "adventure" }
+
+[plugins]
+
+loom = { id = "net.fabricmc.fabric-loom", version.ref = "fabric-loom" }
+
+run-paper = { id = "xyz.jpenilla.run-paper", version.ref = "run-task" }
+run-velocity = { id = "xyz.jpenilla.run-velocity", version.ref = "run-task" }
+run-waterfall = { id = "xyz.jpenilla.run-waterfall", version.ref = "run-task" }
+
+shadowjar = { id = "com.gradleup.shadow", version.ref = "shadow" }

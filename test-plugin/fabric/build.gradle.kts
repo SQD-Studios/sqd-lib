@@ -1,12 +1,25 @@
 plugins {
     id("test")
-    id("net.fabricmc.fabric-loom") version "1.18-SNAPSHOT"
+    alias(libs.plugins.loom)
 }
 
 dependencies {
     implementation(project(":sqdlib-fabric"))
 
-    minecraft("com.mojang:minecraft:26.2")
-    implementation("net.fabricmc:fabric-loader:0.19.3")
-    implementation("net.fabricmc.fabric-api:fabric-api:0.161.0+26.2")
+    minecraft(libs.minecraft)
+}
+
+tasks.processResources {
+    val props = mapOf(
+        "version" to project.version,
+        "mcversion" to libs.versions.minecraft,
+        "loader" to libs.versions.fabric.loader,
+        "java" to java.targetCompatibility
+    )
+    inputs.properties(props)
+    filteringCharset = "UTF-8"
+
+    filesMatching("fabric.mod.json") {
+        expand(props)
+    }
 }

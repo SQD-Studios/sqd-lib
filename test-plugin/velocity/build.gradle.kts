@@ -1,24 +1,24 @@
 plugins {
     id("test")
-    id("xyz.jpenilla.run-velocity") version "3.1.0" apply true
-    id("com.gradleup.shadow") version "9.6.1"
+    alias(libs.plugins.run.velocity) apply true
+    alias(libs.plugins.shadowjar)
 }
 
 dependencies {
     implementation(project(":sqdlib-velocity"))
 
-    compileOnly("com.velocitypowered:velocity-api:4.1.1-SNAPSHOT")
-    annotationProcessor("com.velocitypowered:velocity-api:4.1.1-SNAPSHOT")
+    compileOnly(libs.velocityapi)
+    annotationProcessor(libs.velocityapi)
 }
 
 tasks {
     runVelocity {
-        velocityVersion("4.1.1-SNAPSHOT")
+        velocityVersion(libs.versions.velocity.get())
     }
 
     shadowJar { // The shadowJar configuration
         configurations = project.configurations.runtimeClasspath.map { setOf(it) }
 
-        relocate("net.chamosmp.sqdlib", "(your plugin group).libs")
+        relocate("net.chamosmp.sqdlib", "libs")
     }
 }

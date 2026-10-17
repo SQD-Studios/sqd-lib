@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "test-mod",
-  "version": "3.0.0",
+  "version": "${version}",
   "name": "test-mod",
   "authors": [
     "SQD Studios"
@@ -14,9 +14,8 @@
     ]
   },
   "depends": {
-    "fabricloader": ">=0.19.3",
-    "minecraft": "~26.2",
-    "java": ">=25",
-    "fabric-api": "*"
+    "fabricloader": ">=${loader}",
+    "minecraft": "~${mcversion}",
+    "java": ">=${java}"
   }
 }

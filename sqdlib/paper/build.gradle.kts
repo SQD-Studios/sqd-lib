@@ -1,22 +1,22 @@
 plugins {
     id("shared")
-    id("xyz.jpenilla.run-paper") version "3.1.0" apply true
-    id("com.gradleup.shadow") version "9.6.1"
+    alias(libs.plugins.run.paper) apply true
+    alias(libs.plugins.shadowjar)
 }
 
 dependencies {
     api(project(":sqdlib-core"))
 
     // Plugin APIs
-    compileOnlyApi("com.github.MilkBowl:VaultAPI:1.7.1")
-    compileOnlyApi("me.clip:placeholderapi:2.12.3")
+    compileOnly(libs.vault)
+    compileOnly(libs.placeholderapi)
 
-    compileOnly("io.papermc.paper:paper-api:26.2.build.+")
+    compileOnly(libs.paperapi)
 }
 
 tasks {
     runServer {
-        minecraftVersion("26.2")
+        minecraftVersion(libs.versions.minecraft.get())
     }
 
     processResources {

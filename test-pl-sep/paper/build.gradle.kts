@@ -1,14 +1,14 @@
 plugins {
     id("test")
-    id("xyz.jpenilla.run-paper") version "3.1.0" apply true
+    alias(libs.plugins.run.paper) apply true
 }
 
 dependencies {
     compileOnly(project(":sqdlib-paper"))
 
-    compileOnly("io.papermc.paper:paper-api:26.2.build.+")
+    compileOnly(libs.paperapi)
 }
 
 tasks.runServer {
-    minecraftVersion("26.2")
+    minecraftVersion(libs.versions.minecraft.get())
 }

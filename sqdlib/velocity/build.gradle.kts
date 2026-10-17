@@ -1,20 +1,20 @@
 plugins {
     id("shared")
-    id("xyz.jpenilla.run-velocity") version "3.1.0" apply true
-    id("com.gradleup.shadow") version "9.6.1"
+    alias(libs.plugins.run.velocity) apply true
+    alias(libs.plugins.shadowjar)
 }
 
 
 dependencies {
     api(project(":sqdlib-core"))
-    api("com.sqdstudios.bukkit.configuration:config-api:1.0.0")
+    api(libs.bukkitconfig)
 
-    compileOnly("com.velocitypowered:velocity-api:4.1.1-SNAPSHOT")
+    compileOnly(libs.velocityapi)
 }
 
 tasks {
     runVelocity {
-        velocityVersion("4.1.1-SNAPSHOT")
+        velocityVersion(libs.versions.velocity.get())
     }
 
     processResources {

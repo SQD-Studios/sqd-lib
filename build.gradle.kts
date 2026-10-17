@@ -1,6 +1,5 @@
 plugins {
-    id("shared")
-    id("xyz.jpenilla.run-paper") version "3.1.0" apply false
-    id("xyz.jpenilla.run-velocity") version "3.1.0" apply false
-    id("xyz.jpenilla.run-waterfall") version "3.1.0" apply false
+    alias(libs.plugins.run.paper) apply false
+    alias(libs.plugins.run.velocity) apply false
+    alias(libs.plugins.run.waterfall) apply false
 }

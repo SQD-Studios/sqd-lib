@@ -1,27 +1,31 @@
 plugins {
     id("shared")
-    id("net.fabricmc.fabric-loom") version "1.18-SNAPSHOT"
+    alias(libs.plugins.loom)
 }
 
 dependencies {
     api(project(":sqdlib-core"))
 
-    minecraft("com.mojang:minecraft:26.2")
-    compileOnly("net.fabricmc:fabric-loader:0.19.3")
+    api(libs.bukkitconfig)
+    api(libs.adventure.mod)
 
-    implementation("org.yaml:snakeyaml:2.2")
-    api("com.sqdstudios.bukkit.configuration:config-api:1.0.0")
-    api(include("net.kyori:adventure-platform-fabric:7.1.1")!!)
+    minecraft(libs.minecraft)
+    compileOnlyApi(libs.fabric.loader)
+
+    implementation(libs.snakeyaml)
 }
 
-tasks {
-    processResources {
-        val props = mapOf("version" to project.version)
-        inputs.properties(props)
-        filteringCharset = "UTF-8"
+tasks.processResources {
+    val props = mapOf(
+        "version" to project.version,
+        "mcversion" to libs.versions.minecraft,
+        "loader" to libs.versions.fabric.loader,
+        "java" to java.targetCompatibility
+    )
+    inputs.properties(props)
+    filteringCharset = "UTF-8"
 
-        filesMatching("fabric.mod.json") {
-            expand(props)
-        }
+    filesMatching("fabric.mod.json") {
+        expand(props)
     }
 }
