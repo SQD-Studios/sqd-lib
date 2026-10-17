@@ -4,15 +4,15 @@ plugins {
 }
 
 dependencies {
-    api(project(":sqdlib-core"))
+    include(api(project(":sqdlib-core"))!!)
 
-    api(libs.bukkitconfig)
-    api(libs.adventure.mod)
+    include(api(libs.bukkitconfig.get())!!)
+    include(api(libs.adventure.mod.get())!!)
 
-    minecraft(libs.minecraft)
-    compileOnlyApi(libs.fabric.loader)
+    minecraft(libs.minecraft.get())
+    compileOnlyApi(libs.fabric.loader.get())
 
-    implementation(libs.snakeyaml)
+    include(implementation(libs.snakeyaml.get())!!)
 }
 
 tasks.processResources {
