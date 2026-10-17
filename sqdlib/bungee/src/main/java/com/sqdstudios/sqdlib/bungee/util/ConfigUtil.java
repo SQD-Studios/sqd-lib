@@ -1,6 +1,6 @@
 package com.sqdstudios.sqdlib.bungee.util;
 
-import net.chamosmp.sqdlib.util.log.LogType;
+import com.sqdstudios.sqdlib.util.log.LogType;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
@@ -89,6 +89,7 @@ public final class ConfigUtil {
         File outDir = new File(plugin.getDataFolder(), resourcePath.substring(0, Math.max(lastIndex, 0)));
 
         if (!outDir.exists()) {
+            // noinspection all
             outDir.mkdirs();
         }
 

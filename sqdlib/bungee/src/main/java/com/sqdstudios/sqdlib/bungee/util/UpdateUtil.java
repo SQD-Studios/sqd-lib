@@ -1,7 +1,7 @@
 package com.sqdstudios.sqdlib.bungee.util;
 
-import net.chamosmp.sqdlib.internal.InternalUpdater;
-import net.chamosmp.sqdlib.util.log.LogType;
+import com.sqdstudios.sqdlib.internal.InternalUpdater;
+import com.sqdstudios.sqdlib.util.log.LogType;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
 
@@ -11,6 +11,7 @@ import net.md_5.bungee.api.plugin.Plugin;
  * @apiNote Only supports Modrinth
  * @see UpdateUtil#versionCheck()
  */
+@SuppressWarnings("unused")
 public class UpdateUtil implements Listener, InternalUpdater {
     private final Plugin plugin;
     private final String mrId;

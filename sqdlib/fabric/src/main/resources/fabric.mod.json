@@ -10,7 +10,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.chamosmp.sqdlib.fabric.mod.SqdlibMod"
+      "com.sqdstudios.sqdlib.fabric.mod.SqdlibMod"
     ]
   },
   "depends": {

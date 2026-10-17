@@ -1,8 +1,8 @@
 package com.sqdstudios.sqdlib.bungee.util;
 
-import net.chamosmp.sqdlib.exceptions.LoggerNotInitiatedBeforeUsing;
-import net.chamosmp.sqdlib.util.log.LogRecord;
-import net.chamosmp.sqdlib.util.log.LogType;
+import com.sqdstudios.sqdlib.exceptions.LoggerNotInitiatedBeforeUsing;
+import com.sqdstudios.sqdlib.util.log.LogRecord;
+import com.sqdstudios.sqdlib.util.log.LogType;
 import net.md_5.bungee.api.plugin.Plugin;
 
 /**

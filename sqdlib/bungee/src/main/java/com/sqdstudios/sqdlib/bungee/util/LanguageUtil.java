@@ -1,6 +1,6 @@
 package com.sqdstudios.sqdlib.bungee.util;
 
-import net.chamosmp.sqdlib.util.log.LogType;
+import com.sqdstudios.sqdlib.util.log.LogType;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import org.jspecify.annotations.NonNull;
@@ -17,11 +17,11 @@ import static com.sqdstudios.sqdlib.bungee.util.LoggerUtil.log;
  * @see LanguageUtil#getMessage(String)
  * @see LanguageUtil#getMessage(String, Map)
  */
+@SuppressWarnings("unused")
 public final class LanguageUtil {
 
     private final Plugin plugin;
     private Configuration config;
-    private Configuration pluginConfig;
 
     /**
      * A utility class to make language files, and read from them
@@ -35,10 +35,11 @@ public final class LanguageUtil {
      */
     public LanguageUtil(Plugin plugin) throws IOException {
         this.plugin = plugin;
-        this.pluginConfig = ConfigUtil.loadDataFile(plugin, "config.yml");
+        Configuration pluginConfig = ConfigUtil.loadDataFile(plugin, "config.yml");
 
         File langDir = new File(plugin.getDataFolder(), "lang");
         if (!langDir.exists()) {
+            // noinspection all
             langDir.mkdirs();
         }
 

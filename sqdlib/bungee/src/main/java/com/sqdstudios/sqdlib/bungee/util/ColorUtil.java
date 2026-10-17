@@ -1,6 +1,6 @@
 package com.sqdstudios.sqdlib.bungee.util;
 
-import net.chamosmp.sqdlib.internal.AdventureUtil;
+import com.sqdstudios.sqdlib.internal.AdventureUtil;
 import org.jspecify.annotations.NonNull;
 
 import java.util.List;
@@ -24,6 +24,7 @@ public final class ColorUtil extends AdventureUtil {
      * @param placeholders A map with: the placeholder, the value. The placeholder character is "%"
      * @return The list of messages, with the placeholders
      */
+    @SuppressWarnings("unused")
     public static @NonNull List<String> placeholder(@NonNull List<String> messages, @NonNull Map<?, ?> placeholders) {
         return AdventureUtil.placeholder(messages, placeholders);
     }

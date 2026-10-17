@@ -1,6 +1,6 @@
 name: "SQDLib"
 version: "${version}"
-main: net.chamosmp.sqdlib.paper.plugin.SqdlibPlugin
+main: com.sqdstudios.sqdlib.paper.plugin.SqdlibPlugin
 api-version: "1.21"
 
 website: "https://github.com/SQD-Studios/sqd-lib"

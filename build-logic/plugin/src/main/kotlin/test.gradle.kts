@@ -2,7 +2,7 @@ plugins {
     id("java-library")
 }
 
-group = "net.chamosmp.sqdlib"
+group = "com.sqdstudios.sqdlib"
 version = "4.0.0"
 
 repositories {

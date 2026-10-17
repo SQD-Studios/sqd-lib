@@ -1,1 +1,0 @@
-package net.chamosmp.sqdlib.enums;

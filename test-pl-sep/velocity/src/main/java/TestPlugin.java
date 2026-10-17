@@ -4,10 +4,10 @@ import com.velocitypowered.api.plugin.Dependency;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
-import net.chamomsp.sqdlib.velocity.VelocityPlugin;
-import net.chamomsp.sqdlib.velocity.util.ConfigUtil;
-import net.chamomsp.sqdlib.velocity.util.LoggerUtil;
-import net.chamosmp.sqdlib.util.log.LogType;
+import com.sqdstudios.sqdlib.velocity.VelocityPlugin;
+import com.sqdstudios.sqdlib.velocity.util.ConfigUtil;
+import com.sqdstudios.sqdlib.velocity.util.LoggerUtil;
+import com.sqdstudios.sqdlib.util.log.LogType;
 
 import java.nio.file.Path;
 

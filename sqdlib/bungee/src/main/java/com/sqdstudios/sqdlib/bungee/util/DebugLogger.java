@@ -1,7 +1,7 @@
 package com.sqdstudios.sqdlib.bungee.util;
 
-import net.chamosmp.sqdlib.exceptions.LoggerNotInitiatedBeforeUsing;
-import net.chamosmp.sqdlib.util.log.LogType;
+import com.sqdstudios.sqdlib.exceptions.LoggerNotInitiatedBeforeUsing;
+import com.sqdstudios.sqdlib.util.log.LogType;
 import net.md_5.bungee.api.plugin.Plugin;
 
 import java.io.IOException;
@@ -9,6 +9,7 @@ import java.io.IOException;
 /**
  * A logger that only sends messages to the console if debug is enabled
  */
+@SuppressWarnings("unused")
 public final class DebugLogger {
 
     private static Plugin plugin;
@@ -23,10 +24,11 @@ public final class DebugLogger {
                 throw new LoggerNotInitiatedBeforeUsing("The DebugLogger needs to have the config instance to check if the debug option is enabled");
             }
             if (isDebugEnabled()) {
-                LoggerUtil.log(type, "[Debug]" + message);
+                LoggerUtil.log(type, "[Debug] " + message);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            LoggerUtil.log(LogType.SEVERE, "Could not load config to check debug status!");
+            LoggerUtil.log(LogType.SEVERE, e.toString());
         }
     }
 

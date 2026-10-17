@@ -45,7 +45,7 @@ plugins {
 dependencies {
     // Replace 3.2.0-BETA with the latest version, and you can replace "paper", with the following platforms:
     // velocity, bungee, spigot
-    implementation("net.chamosmp.sqdlib:sqdlib-paper:3.2.0-BETA")
+    implementation("com.sqdstudios.sqdlib:sqdlib-paper:3.2.0-BETA")
 }
 
 tasks {
@@ -53,7 +53,7 @@ tasks {
     shadowJar {
         configurations = project.configurations.runtimeClasspath.map { setOf(it) }
 
-        relocate("net.chamosmp.sqdlib", "(your plugin group).libs.sqdlib")
+        relocate("com.sqdstudios.sqdlib", "(your plugin group).libs.sqdlib")
     }
 }
 ```
@@ -63,7 +63,7 @@ tasks {
 ```kotlin
 dependencies {
     // Replace 3.2.0-BETA with the latest version
-    implementation("net.chamosmp.sqdlib:sqdlib-fabric:3.2.0-BETA")
+    implementation("com.sqdstudios.sqdlib:sqdlib-fabric:3.2.0-BETA")
 }
 ```
 
@@ -93,7 +93,7 @@ found exceptions
 dependencies {
     // Replace 3.2.0-BETA with the latest version, and you can replace "paper", with the following platforms:
     // velocity, bungee, spigot
-    compileOnly("net.chamosmp.sqdlib:sqdlib-paper:3.2.0-BETA")
+    compileOnly("com.sqdstudios.sqdlib:sqdlib-paper:3.2.0-BETA")
 }
 ```
 
@@ -102,8 +102,17 @@ dependencies {
 ```kotlin
 dependencies {
     // Replace 3.2.0-BETA with the latest version
-    compileOnly("net.chamosmp.sqdlib:sqdlib-fabric:3.2.0-BETA")
+    compileOnly("com.sqdstudios.sqdlib:sqdlib-fabric:3.2.0-BETA")
 }
 ```
 
 </details>
+
+## Migrating from v3 to v4
+
+Version 4 is probably the biggest major release and it contains some breaking changes.
+
+You'll first need to replace every instance of `net.chamosmp` with `com.sqdstudios` (And in the dependency too)
+
+If you're migrating from even older versions like v2, you should delete the packages that are not found and make your
+IDE suggest them to you because they're undocumented

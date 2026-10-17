@@ -1,7 +1,9 @@
-import net.chamosmp.sqdlib.lang.value.DoubleValue;
-import net.chamosmp.sqdlib.paper.dialog.SimpleDialog;
-import net.chamosmp.sqdlib.paper.util.*;
-import net.chamosmp.sqdlib.util.log.LogType;
+import com.sqdstudios.sqdlib.paper.dialog.SimpleDialog;
+import com.sqdstudios.sqdlib.paper.util.ColorUtil;
+import com.sqdstudios.sqdlib.paper.util.ConfigUtil;
+import com.sqdstudios.sqdlib.paper.util.LoggerUtil;
+import com.sqdstudios.sqdlib.paper.util.SchedulerUtil;
+import com.sqdstudios.sqdlib.util.log.LogType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -43,12 +45,5 @@ public class TestPlugin extends JavaPlugin implements Listener {
             Bukkit.getServer().isStopping();
             Bukkit.getCurrentTick();
         });
-    }
-
-    public DoubleValue<String, String> getDoubleValue() {
-        String value1 = null;
-        String value2 = null;
-
-        return new DoubleValue<>(value1, value2);
     }
 }
