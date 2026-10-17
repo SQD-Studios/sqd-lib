@@ -1,5 +1,6 @@
 package com.sqdstudios.sqdlib.internal;
 
+import com.sqdstudios.sqdlib.annotations.Requires;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.jspecify.annotations.NonNull;
@@ -11,6 +12,9 @@ import java.util.Map;
 /**
  * Please use the {@code ColorUtil} class of your platform.
  */
+@Requires(
+        @Requires.Dependency(value = "Adventure", neededClass = Component.class)
+)
 public class AdventureUtil {
     private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
 
