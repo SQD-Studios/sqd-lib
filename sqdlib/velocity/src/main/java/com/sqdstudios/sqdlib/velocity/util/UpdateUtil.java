@@ -1,13 +1,15 @@
 package com.sqdstudios.sqdlib.velocity.util;
 
+import com.sqdstudios.sqdlib.internal.InternalUpdater;
+import com.sqdstudios.sqdlib.util.log.LogType;
+import com.sqdstudios.sqdlib.velocity.VelocityPlugin;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.ServerPostConnectEvent;
 import com.velocitypowered.api.plugin.PluginDescription;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
-import com.sqdstudios.sqdlib.velocity.VelocityPlugin;
-import com.sqdstudios.sqdlib.internal.InternalUpdater;
-import com.sqdstudios.sqdlib.util.log.LogType;
+
+import java.util.Map;
 
 /**
  * A utility class for showing your users that the plugin has an update available
@@ -20,6 +22,7 @@ public class UpdateUtil implements InternalUpdater {
 
     private final String mrId;
     private final String downloadUrl;
+    private final String format;
 
     private final String pluginVer;
     private final String pluginName;
@@ -27,20 +30,22 @@ public class UpdateUtil implements InternalUpdater {
     /**
      * A utility class for showing your users that the plugin has an update available
      *
-     * @param plugin      The plugin instance (As an object)
-     * @param modrinthId  The Modrinth project id (Or slug)
-     * @param downloadUrl The download url
+     * @param plugin              The plugin instance (As an object)
+     * @param modrinthId          The Modrinth project id (Or slug)
+     * @param downloadUrl         The download url
+     * @param playerMessageFormat The format of the message that will be sent to the player. You can use the {@code %url%} placeholder to replace it with the url
      * @apiNote Only supports Modrinth. You also don't need to register this as a listener
      * @see UpdateUtil#versionCheck()
      * @see UpdateUtil#onConnect(ServerPostConnectEvent)
      */
-    public UpdateUtil(ProxyServer server, VelocityPlugin plugin, String modrinthId, String downloadUrl) {
+    public UpdateUtil(ProxyServer server, VelocityPlugin plugin, String modrinthId, String downloadUrl, String playerMessageFormat) {
         this.mrId = modrinthId;
         this.downloadUrl = downloadUrl;
+        this.format = playerMessageFormat;
 
         PluginDescription pluginContainer = plugin.getDescription();
         this.pluginVer = pluginContainer.getVersion().orElse("failed");
-        this.pluginName = pluginContainer.getName().orElse("sqdplugin");
+        this.pluginName = pluginContainer.getId();
 
         server.getEventManager().register(plugin, this);
     }
@@ -63,7 +68,7 @@ public class UpdateUtil implements InternalUpdater {
             }
 
             if (InternalUpdater.isNewerVersion(pluginVer, version) && player.hasPermission(pluginName.toLowerCase() + ".update")) {
-                player.sendRichMessage("<white>Download the plugin update <u><click:open_url:" + downloadUrl + ">here<r>");
+                player.sendMessage(ColorUtil.parse(format, Map.of("url", downloadUrl)));
             }
         });
     }

@@ -9,6 +9,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 
+import java.util.Map;
+
 /**
  * A utility class for showing your users that the plugin has an update available
  *
@@ -21,22 +23,25 @@ public class UpdateUtil implements Listener, InternalUpdater {
     private final Plugin plugin;
     private final String mrId;
     private final String downloadUrl;
+    private final String format;
 
 
     /**
      * A utility class for showing your users that the plugin has an update available
      *
-     * @param plugin      The plugin instance
-     * @param modrinthId  The Modrinth project id (Or slug)
-     * @param downloadUrl The download url
+     * @param plugin              The plugin instance
+     * @param modrinthId          The Modrinth project id (Or slug)
+     * @param downloadUrl         The download url
+     * @param playerMessageFormat The format of the message that will be sent to the player. You can use the {@code %url%} placeholder to replace it with the url
      * @apiNote Only supports Modrinth
      * @see UpdateUtil#versionCheck()
      * @see UpdateUtil#onConnect(PlayerJoinEvent)
      */
-    public UpdateUtil(Plugin plugin, String modrinthId, String downloadUrl) {
+    public UpdateUtil(Plugin plugin, String modrinthId, String downloadUrl, String playerMessageFormat) {
         this.plugin = plugin;
         this.mrId = modrinthId;
         this.downloadUrl = downloadUrl;
+        this.format = playerMessageFormat;
 
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
@@ -59,8 +64,10 @@ public class UpdateUtil implements Listener, InternalUpdater {
             }
 
             if (InternalUpdater.isNewerVersion(plugin.getPluginMeta().getVersion(), version) && player.hasPermission(plugin.getPluginMeta().getName().toLowerCase() + ".update")) {
-                SchedulerUtil.runForEntity(plugin, player, () -> player.sendRichMessage("<white>Download the plugin update <u><click:open_url:" + downloadUrl + ">here<r>"), () -> {
-                });
+                SchedulerUtil.runForEntity(plugin, player, () -> player.sendMessage(ColorUtil.parse(player, format, Map.of("url", downloadUrl))),
+                        () -> {
+                        }
+                );
             }
         });
     }
