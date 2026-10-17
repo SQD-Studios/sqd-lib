@@ -3,13 +3,6 @@ plugins {
     id("maven-publish")
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_25
-    targetCompatibility = JavaVersion.VERSION_25
-
-    withSourcesJar()
-}
-
 publishing {
     publications {
         create<MavenPublication>("maven") {

@@ -12,8 +12,8 @@ dependencies {
 tasks.processResources {
     val props = mapOf(
         "version" to project.version,
-        "mcversion" to libs.versions.minecraft,
-        "loader" to libs.versions.fabric.loader,
+        "mcversion" to libs.versions.minecraft.get(),
+        "loader" to libs.versions.fabric.loader.get(),
         "java" to java.targetCompatibility
     )
     inputs.properties(props)
