@@ -8,6 +8,7 @@ import io.papermc.paper.registry.data.dialog.action.DialogAction;
 import io.papermc.paper.registry.data.dialog.input.DialogInput;
 import io.papermc.paper.registry.data.dialog.type.DialogType;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickCallback;
 import net.kyori.adventure.text.event.ClickEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -76,7 +77,7 @@ public class SimpleDialog {
                                         100,
                                         DialogAction.customClick((dsr, _) -> {
                                             callback.accept(dsr.getText(safeKey));
-                                        }, null)
+                                        }, ClickCallback.Options.builder().build())
                                 ),
                                 ActionButton.create(
                                         ColorUtil.parse("<red>Discard"),
