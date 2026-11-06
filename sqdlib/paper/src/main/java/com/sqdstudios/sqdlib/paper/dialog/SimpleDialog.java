@@ -1,30 +1,21 @@
 package com.sqdstudios.sqdlib.paper.dialog;
 
-import io.papermc.paper.connection.PlayerGameConnection;
+import com.sqdstudios.sqdlib.paper.util.ColorUtil;
 import io.papermc.paper.dialog.Dialog;
-import io.papermc.paper.dialog.DialogResponseView;
-import io.papermc.paper.event.player.PlayerCustomClickEvent;
 import io.papermc.paper.registry.data.dialog.ActionButton;
 import io.papermc.paper.registry.data.dialog.DialogBase;
 import io.papermc.paper.registry.data.dialog.action.DialogAction;
 import io.papermc.paper.registry.data.dialog.input.DialogInput;
 import io.papermc.paper.registry.data.dialog.type.DialogType;
-import com.sqdstudios.sqdlib.paper.util.ColorUtil;
-import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.ApiStatus;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 /**
@@ -33,26 +24,22 @@ import java.util.function.Consumer;
  * @see SimpleDialog#getInput(Component, Player, String, Component, String, Consumer)
  * @see SimpleDialog#getYesNo(Component, Player, Consumer)
  */
-public class SimpleDialog implements Listener {
-
-    private final Map<UUID, Map<String, Consumer<String>>> pending = new ConcurrentHashMap<>();
-
-    private final Plugin plugin;
+public class SimpleDialog {
 
     /**
      * A utility class for making dialogs, and doing actions with them
      * <p>
      * <p>
-     * Registers the class as a listener
      *
      * @param plugin The plugin instance
      * @see SimpleDialog#getInput(Component, Player, String, Component, String, Consumer)
      * @see SimpleDialog#getYesNo(Component, Player, Consumer)
+     * @deprecated This method is deprecated because this class no longer needs the plugin instance to work as in internal changes and thus all the methods are now static and don't need to have the {@link SimpleDialog} instance
      */
-    public SimpleDialog(Plugin plugin) {
-        this.plugin = plugin;
-
-        Bukkit.getPluginManager().registerEvents(this, plugin);
+    @ApiStatus.ScheduledForRemoval(inVersion = "4.2.0")
+    @Deprecated(forRemoval = true, since = "4.1.0")
+    @SuppressWarnings("unused")
+    public SimpleDialog(@Nullable Plugin plugin) {
     }
 
     /**
@@ -66,14 +53,11 @@ public class SimpleDialog implements Listener {
      * @param callback Called with the player's input, or null on discard
      */
     @SuppressWarnings("all")
-    public void getInput(@NonNull Component title, @NonNull Player player, @NonNull String key, @NonNull Component content, @Nullable String defaultValue, @NonNull Consumer<String> callback) {
+    public static void getInput(@NonNull Component title, @NonNull Player player, @NonNull String key, @NonNull Component content, @Nullable String defaultValue, @NonNull Consumer<String> callback) {
         if (key == null || key.isBlank()) return;
 
         // Sanitize: lowercase, replace invalid chars with underscores
         final String safeKey = key.toLowerCase().replaceAll("[^a-z0-9_\\-.]", "_");
-
-        pending.computeIfAbsent(player.getUniqueId(), _ -> new ConcurrentHashMap<>())
-                .put(safeKey, callback);
 
         Dialog dialog = Dialog.create(builder ->
                 builder.empty()
@@ -90,14 +74,15 @@ public class SimpleDialog implements Listener {
                                         ColorUtil.parse("<green>Confirm"),
                                         ColorUtil.parse("Click to confirm your input."),
                                         100,
-                                        DialogAction.customClick(Key.key(plugin.getPluginMeta().getName().toLowerCase() + ":" + safeKey + "/confirm"), null)
+                                        DialogAction.customClick((dsr, _) -> {
+                                            callback.accept(dsr.getText(safeKey));
+                                        }, null)
                                 ),
                                 ActionButton.create(
                                         ColorUtil.parse("<red>Discard"),
                                         ColorUtil.parse("Click to discard your input."),
                                         100,
                                         DialogAction.staticAction(ClickEvent.callback(_ -> {
-                                            pending.remove(player.getUniqueId());
                                             callback.accept(null);
                                         }))
                                 )
@@ -115,7 +100,7 @@ public class SimpleDialog implements Listener {
      * @param player   The player to open the dialog to
      * @param callback Called with the player's input, or null on discard
      */
-    public void getYesNo(@NonNull Component title, @NonNull Player player, @NonNull Consumer<Boolean> callback) {
+    public static void getYesNo(@NonNull Component title, @NonNull Player player, @NonNull Consumer<Boolean> callback) {
         Dialog dialog = Dialog.create(builder ->
                 builder.empty()
                         .base(DialogBase.builder(title)
@@ -137,35 +122,5 @@ public class SimpleDialog implements Listener {
         );
 
         player.showDialog(dialog);
-    }
-
-    /**
-     * Code logic for the {@link #getInput(Component, Player, String, Component, String, Consumer)}, when the value is confirmed
-     *
-     * @param event The event
-     */
-    @EventHandler
-    public void onDialogClick(PlayerCustomClickEvent event) {
-        Key id = event.getIdentifier();
-        String path = id.value();
-
-        if (!id.namespace().equals(plugin.getPluginMeta().getName().toLowerCase())) return;
-        if (!path.endsWith("/confirm")) return;
-
-        if (!(event.getCommonConnection() instanceof PlayerGameConnection conn)) return;
-        Player player = conn.getPlayer();
-
-        String key = path.substring(0, path.lastIndexOf('/'));
-
-        Map<String, Consumer<String>> playerPending = pending.get(player.getUniqueId());
-        if (playerPending == null) return;
-
-        Consumer<String> callback = playerPending.remove(key);
-        if (playerPending.isEmpty()) pending.remove(player.getUniqueId());
-        if (callback == null) return;
-
-        DialogResponseView view = event.getDialogResponseView();
-        String text = (view != null) ? view.getText(key) : null;
-        callback.accept(text);
     }
 }

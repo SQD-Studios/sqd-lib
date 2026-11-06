@@ -32,7 +32,7 @@ public class TestPlugin extends JavaPlugin implements Listener {
         Player player = event.getPlayer();
         player.sendMessage(ColorUtil.parse(player, "Hello there!"));
 
-        new SimpleDialog(this).getYesNo(ColorUtil.parse("Yes or no?"), player, b -> {
+        SimpleDialog.getYesNo(ColorUtil.parse("Yes or no?"), player, b -> {
             if (b) {
                 LoggerUtil.log(LogType.INFO, "The player said yes");
                 crashPlugin();

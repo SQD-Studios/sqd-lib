@@ -25,9 +25,14 @@ public final class GuiListener implements Listener {
         }
     }
 
+    public interface ChamoGuiManual extends ChamoGui {
+    }
+
     @EventHandler
     public void onClick(InventoryClickEvent event) {
-        if (event.getInventory().getHolder() instanceof ChamoGui gui) {
+        if (event.getInventory().getHolder() instanceof ChamoGuiManual guiManual) {
+            guiManual.handleClick(event);
+        } else if (event.getInventory().getHolder() instanceof ChamoGui gui) {
             event.setCancelled(true);
             gui.handleClick(event);
         }
@@ -35,7 +40,9 @@ public final class GuiListener implements Listener {
 
     @EventHandler
     public void onClose(InventoryCloseEvent event) {
-        if (event.getInventory().getHolder() instanceof ChamoGui gui) {
+        if (event.getInventory().getHolder() instanceof ChamoGuiManual guiManual) {
+            guiManual.handleClose(event);
+        } else if (event.getInventory().getHolder() instanceof ChamoGui gui) {
             gui.handleClose(event);
         }
     }
